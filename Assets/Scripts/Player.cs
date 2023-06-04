@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
+ 
     Vector3 moveDelta;
     public int keys_collected = 0;
     //public Rigidbody2D rb;
+    public Animator animator;
+
 
     private RaycastHit2D hit;
 
@@ -31,9 +33,17 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
+        animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
+        animator.SetFloat("VerticalSpeed", Mathf.Abs(y));
+
+
+
+        
         moveDelta = new Vector3(x, y, 0);
 
         Debug.Log(x);
