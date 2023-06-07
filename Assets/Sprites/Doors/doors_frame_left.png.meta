@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9b64abf80d6c2a84795dea1985410a1f
+guid: a44cb999b46c10f47b38128dfbea8b7d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,28 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: column_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f1a0cd727ca4024796bfeadcfc5e0eb
-      internalID: 604208661
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: column_1
+      name: doors_frame_left_0
       rect:
         serializedVersion: 2
         x: 0
@@ -140,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 970dbfb08887f0f4c9b65d326c831faa
-      internalID: -470813161
+      spriteID: a5f107e245e78bc4f8cc67064b97f5d2
+      internalID: 1519477433
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: column_2
+      name: doors_frame_left_1
       rect:
         serializedVersion: 2
         x: 0
@@ -161,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 599026490a3508a4581de678f0053f4c
-      internalID: -2038635369
+      spriteID: 4cc006ac9f288174c8e1cfa03648e227
+      internalID: 1625124482
       vertices: []
       indices: 
       edges: []
@@ -178,9 +157,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      column_0: 604208661
-      column_2: -2038635369
-      column_1: -470813161
+      doors_frame_left_0: 1519477433
+      doors_frame_left_1: 1625124482
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

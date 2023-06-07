@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9b64abf80d6c2a84795dea1985410a1f
+guid: dfbe189d601865149a076f0b2fcaa555
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,49 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: column_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f1a0cd727ca4024796bfeadcfc5e0eb
-      internalID: 604208661
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: column_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 970dbfb08887f0f4c9b65d326c831faa
-      internalID: -470813161
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: column_2
+      name: doors_frame_top_0
       rect:
         serializedVersion: 2
         x: 0
@@ -161,8 +119,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 599026490a3508a4581de678f0053f4c
-      internalID: -2038635369
+      spriteID: 0d5e111c11c37ba4d8adbecf659559f3
+      internalID: 1514425046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: doors_frame_top_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be1cf27afc2f20f479c6e11de2eb8e64
+      internalID: -1490324251
       vertices: []
       indices: 
       edges: []
@@ -178,9 +157,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      column_0: 604208661
-      column_2: -2038635369
-      column_1: -470813161
+      doors_frame_top_1: -1490324251
+      doors_frame_top_0: 1514425046
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
