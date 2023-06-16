@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: wall_edge_tshape_bottom_left
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: cf71417d1c783ff42b4076268e71605f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4672993565a886c4a964b935325b56ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
