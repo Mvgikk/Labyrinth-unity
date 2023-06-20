@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     //public Rigidbody2D rb;
     public Animator animator;
 
-    public float playerSpeed = 4;
+    private float playerSpeed = 4.0f;
 
     private RaycastHit2D hit;
 
