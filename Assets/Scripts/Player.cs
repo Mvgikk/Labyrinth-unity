@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     //public Rigidbody2D rb;
     public Animator animator;
 
+    public float playerSpeed = 4;
 
     private RaycastHit2D hit;
 
@@ -37,6 +38,9 @@ public class Player : MonoBehaviour
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
+
+        x *= playerSpeed;
+        y *= playerSpeed;
 
         animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
         animator.SetFloat("VerticalSpeed", Mathf.Abs(y));
