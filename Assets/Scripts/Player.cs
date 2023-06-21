@@ -50,9 +50,6 @@ public class Player : MonoBehaviour
         
         moveDelta = new Vector3(x, y, 0);
 
-        Debug.Log(x);
-        Debug.Log(y);
-
         if (moveDelta.x > 0)
         {
             transform.localScale = Vector3.one;
