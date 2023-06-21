@@ -22,15 +22,7 @@ public class Player : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        //float moveAmountVer = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
-        //float moveAmountHor = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-        //transform.Translate(0,moveAmountVer,0);
-        //transform.Translate(moveAmountHor, 0, 0);
 
-
-    }
 
     private void FixedUpdate()
     {
