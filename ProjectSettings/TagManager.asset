@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Keys
   - Coin
+  - Chest
   layers:
   - Default
   - TransparentFX
