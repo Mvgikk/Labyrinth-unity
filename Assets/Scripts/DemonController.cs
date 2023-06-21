@@ -33,6 +33,6 @@ public class DemonController : MonoBehaviour
 
             previousPosition = transform.position;
         }
-        
+
     }
 }
