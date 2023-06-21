@@ -8,10 +8,14 @@ public class Lever : MonoBehaviour
     public bool isActivated = false;
     public GameObject targetObject; // The object to activate or deactivate when the lever is pulled
     public float activationDistance = 1.5f; // The maximum distance at which the player can activate the lever
+    public AudioClip pullSound; // Sound effect to play when the lever is pulled
+    public AudioSource leverAudioSource; // Reference to the AudioSource component
 
     public Sprite pulledSprite; // The sprite to use when the lever is pulled
     private SpriteRenderer leverSpriteRenderer; // Reference to the Sprite Renderer component
     private Sprite initialSprite; // Reference to the lever's initial sprite
+
+
 
 
 
@@ -54,12 +58,15 @@ public class Lever : MonoBehaviour
             Debug.Log("Lever activated!");
             // Activate or enable the target object, e.g., targetObject.SetActive(true);
             leverSpriteRenderer.sprite = pulledSprite; // Change the lever sprite
+            leverAudioSource.PlayOneShot(pullSound); // Play the lever pull sound effect
+            
         }
         else
         {
             Debug.Log("Lever deactivated!");
             // Deactivate or disable the target object, e.g., targetObject.SetActive(false);
             leverSpriteRenderer.sprite = initialSprite; // Revert the lever sprite back to the initial state
+            leverAudioSource.PlayOneShot(pullSound); // Play the lever pull sound effect
         }
     }
 }
