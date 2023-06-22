@@ -7,7 +7,6 @@ public class LargeLightPotion : MonoBehaviour
 {
     public float intensityIncreaseAmount = 1f; // Amount to increase the light intensity
     public AudioClip drinkSound; // Sound effect to play when drinking the potion
-    public AudioSource audioSource;
 
    // public GameObject effectPrefab; // Particle effect to play when drinking the potion
 
