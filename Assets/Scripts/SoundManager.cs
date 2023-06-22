@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip clickEffect;
     public AudioClip coinCollectEffect;
+    public AudioClip chestOpenEffect;
     public AudioSource audioSource;
 
     private static SoundManager soundManagerInstance;
@@ -37,6 +38,8 @@ public class SoundManager : MonoBehaviour
         
         audioSource.PlayOneShot(coinCollectEffect);
     }
+
+
 
 
 }

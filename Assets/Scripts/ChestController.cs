@@ -5,11 +5,16 @@ using UnityEngine;
 public class ChestController : MonoBehaviour
 {
 
-    public Animator animator;
-    public float activationDistance = 1.5f; // The maximum distance at which the player can activate the lever
+    private Animator animator;
+    public float activationDistance = 1.5f; // The maximum distance at which the player can activate the chest
     private bool isFull = false;
 
+    public AudioClip chestOpenSound; // Sound effect to play when the chest is opened
+    public AudioSource chestAudioSource; // Reference to the AudioSource component
+
     private bool hasInteracted = false; //bool to check if player has already interacted with chest
+    private static List<ChestController> interactedChests = new List<ChestController>();
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -20,11 +25,23 @@ public class ChestController : MonoBehaviour
             }
         }
     }
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     public void Interact()
     {
         if (hasInteracted)
         {
             Debug.Log("Player already interacted with the chest!");
+            return;
+        }
+        
+        if (interactedChests.Contains(this))
+        {
+            Debug.Log("This chest has already been interacted with!");
             return;
         }
         if (isFull)
@@ -36,10 +53,11 @@ public class ChestController : MonoBehaviour
         {
             Debug.Log("The chest is empty!");
         }
-
+        chestAudioSource.PlayOneShot(chestOpenSound); 
         animator.SetBool("isFull", isFull);
         animator.SetTrigger("Interact");
         hasInteracted = true;
+        interactedChests.Add(this);
     }
 
     public void SetFull(bool full)
