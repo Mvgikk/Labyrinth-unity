@@ -5,73 +5,27 @@ using UnityEngine;
 public class ChestController : MonoBehaviour
 {
 
-    public Animator animator;
-    public float activationDistance = 1.5f; // The maximum distance at which the player can activate the lever
-    private bool isFull = false;
+ private Chest currentChest;
+ public SoundManager soundManager;
 
-    private bool hasInteracted = false; //bool to check if player has already interacted with chest
-    private void Update()
+
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && currentChest != null && !currentChest.hasInteracted)
         {
-            if (IsPlayerInRange())
-            {
-                InteractWithChest();
-            }
+            currentChest.InteractWithChest();
+            soundManager.PlayChestOpenEffect();
         }
     }
-    public void Interact()
+
+        private void OnCollisionEnter2D(Collision2D collision) 
     {
-        if (hasInteracted)
+        Chest chest = collision.collider.GetComponent<Chest>();
+        if (chest != null)
         {
-            Debug.Log("Player already interacted with the chest!");
-            return;
+            currentChest = chest;
         }
-        if (isFull)
-        {
-            Debug.Log("You found treasure in the chest!");
-            
-        }
-        else
-        {
-            Debug.Log("The chest is empty!");
-        }
-
-        animator.SetBool("isFull", isFull);
-        animator.SetTrigger("Interact");
-        hasInteracted = true;
     }
-
-    public void SetFull(bool full)
-    {
-        isFull = full;
-        animator.SetBool("isFull", isFull);
-    }
-    private bool IsPlayerInRange()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        if (player != null)
-        {
-            float distance = Vector3.Distance(player.transform.position, transform.position);
-            return distance <= activationDistance;
-        }
-
-        return false;
-    }
-
-    public void InteractWithChest()
-{
-    // Find the chest object or obtain a reference to it using other means
-    ChestController chest = FindObjectOfType<ChestController>();
-
-    // Randomly determine if the chest is empty or full
-    bool isFull = Random.value < 0.5f;
-
-    // Set the chest state and trigger the animation
-    chest.SetFull(isFull);
-    chest.Interact();
-}
 
 
 }

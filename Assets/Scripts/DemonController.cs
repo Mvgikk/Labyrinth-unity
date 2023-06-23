@@ -22,7 +22,7 @@ public class DemonController : MonoBehaviour
         {
             
             animator.SetFloat("HorizontalSpeed",1);
-            Debug.Log(aiPath.velocity.x);
+            //Debug.Log(aiPath.velocity.x);
             setTurnSide();
             previousPosition = transform.position;
         }
