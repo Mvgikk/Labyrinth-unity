@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Chest : MonoBehaviour
 {
 
     public Animator animator;
     public float interactionDistance = 2f;
+    public PlayerLightController playerLightController;
 
     private bool isFull = false;
 
@@ -20,6 +22,10 @@ public class Chest : MonoBehaviour
         }
         if (isFull)
         {
+            if (playerLightController != null){
+                playerLightController.increasePlayerLightOuterRadius();
+            }
+
             Debug.Log("You found treasure in the chest!");
             
         }
@@ -49,6 +55,7 @@ public class Chest : MonoBehaviour
     this.Interact();
     isFull = Random.value < 0.5f;
 }
+
 
 
 }

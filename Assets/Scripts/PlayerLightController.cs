@@ -21,4 +21,9 @@ public class PlayerLightController : MonoBehaviour
         newIntensity = Mathf.Clamp(newIntensity, 0.1f, playerLight.intensity); // Ensure the intensity doesn't go below 0.1
         playerLight.intensity = newIntensity;
     }
+
+    public void increasePlayerLightOuterRadius()
+    {
+        playerLight.pointLightOuterRadius +=1.0f;
+    }
 }
