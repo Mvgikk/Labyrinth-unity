@@ -91002,6 +91002,7 @@ GameObject:
   - component: {fileID: 1600181757}
   - component: {fileID: 1600181756}
   - component: {fileID: 1600181759}
+  - component: {fileID: 1600181760}
   m_Layer: 0
   m_Name: Big Demon
   m_TagString: Untagged
@@ -91241,6 +91242,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1600181752}
   aiPath: {fileID: 1600181757}
+  target: {fileID: 2023965406}
+  monster: {fileID: 1600181754}
+  visionRange: 20
+--- !u!114 &1600181760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600181750}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e6c29e32504465faa943c537d8029b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  targets: []
+  delay: 0
 --- !u!1001 &1677997365
 PrefabInstance:
   m_ObjectHideFlags: 0

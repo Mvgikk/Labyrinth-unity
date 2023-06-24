@@ -8,6 +8,11 @@ public class DemonController : MonoBehaviour
     private Vector3 previousPosition;
     public Animator animator;
     public Pathfinding.AIPath aiPath;
+    public Transform target;
+    public Transform monster;
+    public int visionRange = 10;
+    public bool sensesPlayer = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +21,16 @@ public class DemonController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(Vector3.Distance (target.position, monster.position) < visionRange)
+        {
+            aiPath.isStopped = false;
+            sensesPlayer = true;
+        }
+        else
+        {
+            aiPath.isStopped = true;
+            sensesPlayer = false;
+        }
 
 
         if (transform.position.x != previousPosition.x)
