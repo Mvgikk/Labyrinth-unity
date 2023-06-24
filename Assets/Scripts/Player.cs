@@ -30,9 +30,15 @@ public class Player : MonoBehaviour
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
+        if (x > 0 || y > 0)
+            Debug.Log(x + ", " + y);
 
         x *= playerSpeed;
         y *= playerSpeed;
+        
+        if (x > 0 || y > 0)
+            Debug.Log(x + ", " + y);
+
 
         animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
         animator.SetFloat("VerticalSpeed", Mathf.Abs(y));

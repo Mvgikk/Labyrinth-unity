@@ -60,6 +60,9 @@ TagManager:
   - name: Actor
     uniqueID: 2344445637
     locked: 0
+  - name: Front Design
+    uniqueID: 1015667353
+    locked: 0
   - name: Top
     uniqueID: 1049644813
     locked: 0
