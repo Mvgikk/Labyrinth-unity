@@ -5,6 +5,7 @@ using UnityEngine;
 public class CoinCollector : MonoBehaviour
 {
     private int coinCount = 0; // Counter for collected coins
+    public CoinCounter coinCounter; // Reference to the CoinCounter component
     public SoundManager soundManager;
 
 
@@ -22,7 +23,7 @@ public class CoinCollector : MonoBehaviour
 
         
         Debug.Log("Coin collected! Total coins: " + coinCount);
-
+        coinCounter.UpdateCoinCount(coinCount); // Update the displayed coin count
         soundManager.PlayCoinCollectEffect();
         // Disable the coin object
         Destroy(coin);

@@ -10,6 +10,8 @@ public class Chest : MonoBehaviour
     public float interactionDistance = 2f;
     public PlayerLightController playerLightController;
 
+    public TextDisplayController textDisplay;
+
     private bool isFull = false;
 
     public bool hasInteracted = false; //bool to check if player has already interacted with chest
@@ -20,9 +22,11 @@ public class Chest : MonoBehaviour
             Debug.Log("Player already interacted with the chest!");
             return;
         }
+        
         if (isFull)
         {
             if (playerLightController != null){
+                textDisplay.UpdateText("You were lucky, Increased Vision");
                 playerLightController.increasePlayerLightOuterRadius();
             }
 
@@ -31,6 +35,7 @@ public class Chest : MonoBehaviour
         }
         else
         {
+            textDisplay.UpdateText("Chest was empty!");
             Debug.Log("The chest is empty!");
         }
 

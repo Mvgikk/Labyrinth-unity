@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TrapMovement : MonoBehaviour
 {
@@ -67,6 +69,7 @@ public class TrapMovement : MonoBehaviour
 
                 Debug.Log("Trap wszedl");
                 //TODO gracz smierc
+                SceneManager.LoadScene("GameOverMenu");
 
             }
         }

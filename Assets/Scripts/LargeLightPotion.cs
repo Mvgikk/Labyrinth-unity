@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using TMPro;
+
 
 public class LargeLightPotion : MonoBehaviour
 {
     public float intensityIncreaseAmount = 1f; // Amount to increase the light intensity
     public AudioClip drinkSound; // Sound effect to play when drinking the potion
 
-   // public GameObject effectPrefab; // Particle effect to play when drinking the potion
+    public TextDisplayController textDisplay;
 
+   // public GameObject effectPrefab; // Particle effect to play when drinking the potion
+    private bool hasDisplayedText = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -19,6 +23,11 @@ public class LargeLightPotion : MonoBehaviour
             {
                 playerLight.intensity += intensityIncreaseAmount;
                 PlayDrinkSound();
+                if(!hasDisplayedText)
+                {
+                textDisplay.UpdateText("Potions increase player's light intesity");
+                hasDisplayedText = true; 
+                }
                // PlayEffect();
                 Destroy(gameObject); // Destroy the potion after it has been consumed
             }

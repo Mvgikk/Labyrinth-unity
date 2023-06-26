@@ -22,6 +22,7 @@ public class DemonController : VersionedMonoBehaviour
 
     private Vector3 previousPosition;
     public Animator animator;
+    public SoundManager soundManager;
     public Pathfinding.AIPath aiPath;
     public Transform playerTransform;
     public Transform monsterTransform;
@@ -101,8 +102,10 @@ public class DemonController : VersionedMonoBehaviour
 
         if(Vector3.Distance (playerTransform.position, monsterTransform.position) < visionRange)
         {
+            Debug.Log("Senses Player");
             sensesPlayer = true;
             FollowingUpdate();
+            soundManager.PlayMonsterScreechEffect();
         }
         else
         {
