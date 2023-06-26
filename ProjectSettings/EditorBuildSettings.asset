@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Labyrinth.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/LabyrinthUpgrade.unity
+    guid: c51bdf62615855d4c85498876e41653d
+  - enabled: 1
+    path: Assets/Scenes/GameOverMenu.unity
+    guid: 8abe795a274c7774eb1711e9e136141e
   m_configObjects: {}

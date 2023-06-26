@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
- 
     Vector3 moveDelta;
     public int keys_collected = 0;
     //public Rigidbody2D rb;
@@ -92,6 +92,13 @@ public class Player : MonoBehaviour
         if(other.gameObject.tag == "Exit" && keys_collected == 3)
         {
             Debug.Log("Win");
+        }
+
+        // game over condition
+        if (other.gameObject.tag == "Monster")
+        {
+            Debug.Log("He got you!");
+            SceneManager.LoadScene("GameOverMenu");
         }
     }
 }

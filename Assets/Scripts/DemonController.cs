@@ -1,17 +1,66 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DemonController : MonoBehaviour
+public class DemonController : VersionedMonoBehaviour
 {
+    IAstarAI ai;
+
+    //waypoints for patrolling of the demon
+    public Transform[] waypoints;
+
+    /// <summary>Time in seconds to wait at each target</summary>
+    public float delay = 0;
+
+    /// <summary>Current target index</summary>
+    int index;
+
+    IAstarAI agent;
+    float switchTime = float.PositiveInfinity;
 
     private Vector3 previousPosition;
     public Animator animator;
     public Pathfinding.AIPath aiPath;
-    public Transform target;
-    public Transform monster;
+    public Transform playerTransform;
+    public Transform monsterTransform;
     public int visionRange = 10;
     public bool sensesPlayer = false;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        agent = GetComponent<IAstarAI>();
+    }
+
+    /// <summary>Update is called once per frame</summary>
+    void PatrolUpdate()
+    {
+        if (waypoints.Length == 0) return;
+
+        bool search = false;
+
+        // Note: using reachedEndOfPath and pathPending instead of reachedDestination here because
+        // if the destination cannot be reached by the agent, we don't want it to get stuck, we just want it to get as close as possible and then move on.
+        if (agent.reachedEndOfPath && !agent.pathPending && float.IsPositiveInfinity(switchTime))
+        {
+            switchTime = Time.time + delay;
+        }
+
+        if (Time.time >= switchTime)
+        {
+            index = index + 1;
+            search = true;
+            switchTime = float.PositiveInfinity;
+        }
+
+        index = index % waypoints.Length;
+        agent.destination = waypoints[index].position;
+
+        if (search) agent.SearchPath();
+    }
+
+
     
     // Start is called before the first frame update
     void Start()
@@ -19,17 +68,40 @@ public class DemonController : MonoBehaviour
         previousPosition = transform.position;
     }
 
+    void OnEnable()
+    {
+        ai = GetComponent<IAstarAI>();
+        // Update the destination right before searching for a path as well.
+        // This is enough in theory, but this script will also update the destination every
+        // frame as the destination is used for debugging and may be used for other things by other
+        // scripts as well. So it makes sense that it is up to date every frame.
+        if (ai != null && sensesPlayer) ai.onSearchPath += FollowingUpdate;
+    }
+
+    void OnDisable()
+    {
+        if (ai != null && sensesPlayer) ai.onSearchPath -= FollowingUpdate;
+    }
+
+    /// <summary>Updates the AI's destination every frame</summary>
+    void FollowingUpdate()
+    {
+        if (playerTransform != null && ai != null) ai.destination = playerTransform.position;
+    }
+
+
     void FixedUpdate()
     {
-        if(Vector3.Distance (target.position, monster.position) < visionRange)
+        if(Vector3.Distance (playerTransform.position, monsterTransform.position) < visionRange)
         {
-            aiPath.isStopped = false;
             sensesPlayer = true;
+            FollowingUpdate();
         }
         else
         {
-            aiPath.isStopped = true;
             sensesPlayer = false;
+            PatrolUpdate();
+
         }
 
 
