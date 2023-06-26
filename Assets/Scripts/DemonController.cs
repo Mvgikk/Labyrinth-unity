@@ -2,11 +2,12 @@ using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DemonController : VersionedMonoBehaviour
 {
     IAstarAI ai;
-
+    
     //waypoints for patrolling of the demon
     public Transform[] waypoints;
 
@@ -24,7 +25,10 @@ public class DemonController : VersionedMonoBehaviour
     public Pathfinding.AIPath aiPath;
     public Transform playerTransform;
     public Transform monsterTransform;
-    public int visionRange = 10;
+    public float visionRange = 10;
+
+    public Slider fearBarSlider;
+
     public bool sensesPlayer = false;
 
     protected override void Awake()
@@ -92,6 +96,9 @@ public class DemonController : VersionedMonoBehaviour
 
     void FixedUpdate()
     {
+
+        visionRange = fearBarSlider.value;
+
         if(Vector3.Distance (playerTransform.position, monsterTransform.position) < visionRange)
         {
             sensesPlayer = true;

@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public int fearLevel = 0;
+
+    public Slider fearBarSlider;
+
     Vector3 moveDelta;
     public int keys_collected = 0;
     //public Rigidbody2D rb;
@@ -26,7 +31,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        fearBarSlider.value = fearLevel;
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -42,9 +47,6 @@ public class Player : MonoBehaviour
 
         animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
         animator.SetFloat("VerticalSpeed", Mathf.Abs(y));
-
-
-
         
         moveDelta = new Vector3(x, y, 0);
 
@@ -76,8 +78,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) 
     {
-
-
         if(other.gameObject.tag == "Walls")
         {
             //TODO utrata hp
