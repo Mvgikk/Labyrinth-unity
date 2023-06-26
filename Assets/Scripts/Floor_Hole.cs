@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Floor_Hole : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class Floor_Hole : MonoBehaviour
 
                 Debug.Log("Dziura wszedl");
                 //TODO gracz smierc
-
+                SceneManager.LoadScene("GameOverMenu");
             }
         }
     }
