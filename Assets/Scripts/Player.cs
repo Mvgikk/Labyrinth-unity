@@ -21,9 +21,18 @@ public class Player : MonoBehaviour
 
     private BoxCollider2D boxCollider;
 
+    public AudioClip walkingSound;
+
+    private AudioSource audioSource;
+
+    public bool isWalking;
+
+
+
     private void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -45,6 +54,10 @@ public class Player : MonoBehaviour
             Debug.Log(x + ", " + y);
 
 
+
+         // Check if the player is walking
+        bool wasWalking = isWalking; // Store the previous state of isWalking
+        isWalking = (x != 0 || y != 0);
         animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
         animator.SetFloat("VerticalSpeed", Mathf.Abs(y));
         
@@ -60,6 +73,8 @@ public class Player : MonoBehaviour
         }
 
 
+
+
         //check if can move in the vertical director by casting a collider box there. If null -> can move
         hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
 
@@ -73,6 +88,20 @@ public class Player : MonoBehaviour
         {
             transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
         }
+
+
+        // Check if the walking state has changed
+        if (isWalking && !wasWalking && !audioSource.isPlaying)
+        {
+        // Player started walking
+            audioSource.PlayOneShot(walkingSound);
+        }
+        else if (!isWalking && wasWalking)
+        {
+        // Player stopped walking
+            audioSource.Stop();
+        }
+
     }
 
 
