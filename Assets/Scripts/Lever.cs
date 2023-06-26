@@ -16,9 +16,6 @@ public class Lever : MonoBehaviour
     private Sprite initialSprite; // Reference to the lever's initial sprite
 
 
-
-
-
     private void Start()
     {
         leverSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -60,6 +57,12 @@ public class Lever : MonoBehaviour
             leverSpriteRenderer.sprite = pulledSprite; // Change the lever sprite
             leverAudioSource.PlayOneShot(pullSound); // Play the lever pull sound effect
             
+            if (targetObject.tag == "Door")
+            {
+                Debug.Log("opening door");
+                targetObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("doors_leaf_open");
+                targetObject.GetComponent<BoxCollider2D>().enabled = false;
+            }
         }
         else
         {
@@ -67,6 +70,13 @@ public class Lever : MonoBehaviour
             // Deactivate or disable the target object, e.g., targetObject.SetActive(false);
             leverSpriteRenderer.sprite = initialSprite; // Revert the lever sprite back to the initial state
             leverAudioSource.PlayOneShot(pullSound); // Play the lever pull sound effect
+
+            if (targetObject.tag == "Door")
+            {
+                Debug.Log("closing door");
+                targetObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("doors_leaf_closed");
+                targetObject.GetComponent<BoxCollider2D>().enabled = true;
+            }
         }
     }
 }

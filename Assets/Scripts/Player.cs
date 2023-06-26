@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
         y *= playerSpeed;
         
         if (x > 0 || y > 0)
-            Debug.Log(x + ", " + y);
+           Debug.Log(x + ", " + y);
 
 
         animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));

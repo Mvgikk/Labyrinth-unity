@@ -9,6 +9,8 @@ TagManager:
   - Chest
   - LargeLightPotion
   - Monster
+  - Tag
+  - Door
   layers:
   - Default
   - TransparentFX

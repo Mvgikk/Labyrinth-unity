@@ -30,6 +30,7 @@ public class DemonController : VersionedMonoBehaviour
     public Slider fearBarSlider;
 
     public bool sensesPlayer = false;
+    public bool debuffed = false;
 
     protected override void Awake()
     {
@@ -93,7 +94,11 @@ public class DemonController : VersionedMonoBehaviour
         if (playerTransform != null && ai != null) ai.destination = playerTransform.position;
     }
 
-
+    public void debuff()
+    {
+        debuffed = true;
+        Debug.Log("Debuffed");
+    }
     void FixedUpdate()
     {
 
@@ -108,7 +113,6 @@ public class DemonController : VersionedMonoBehaviour
         {
             sensesPlayer = false;
             PatrolUpdate();
-
         }
 
 
