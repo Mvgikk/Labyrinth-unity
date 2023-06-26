@@ -7,6 +7,7 @@ public class PlayerLightController : MonoBehaviour
 {
     public float decreaseRate = 0.05f; // Rate at which the light intensity decreases per second
     public Light2D playerLight;
+    public float minValue = 0.65f;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class PlayerLightController : MonoBehaviour
     {
         // Decrease the light intensity over time
         float newIntensity = playerLight.intensity - decreaseRate * Time.deltaTime;
-        newIntensity = Mathf.Clamp(newIntensity, 0.1f, playerLight.intensity); // Ensure the intensity doesn't go below 0.1
+        newIntensity = Mathf.Clamp(newIntensity, minValue, playerLight.intensity); // Ensure the intensity doesn't go below 0.1
         playerLight.intensity = newIntensity;
     }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DemonController : VersionedMonoBehaviour
 {
@@ -19,7 +20,7 @@ public class DemonController : VersionedMonoBehaviour
 
     IAstarAI agent;
     float switchTime = float.PositiveInfinity;
-
+    public TextDisplayController textDisplay;
     private Vector3 previousPosition;
     public Animator animator;
     public SoundManager soundManager;
@@ -109,6 +110,7 @@ public class DemonController : VersionedMonoBehaviour
         {
             Debug.Log("Senses Player");
             sensesPlayer = true;
+            textDisplay.UpdateText("Monster senses you!");
             FollowingUpdate();
             soundManager.PlayMonsterScreechEffect();
         }

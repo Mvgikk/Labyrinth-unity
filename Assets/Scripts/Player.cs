@@ -33,6 +33,12 @@ public class Player : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
+        var er = GameObject.Find("ECGReceiver");
+        if(er)
+        {
+            var comp = er.GetComponent<ECGReceiver>();
+            comp.receivedHR.AddListener((hr) => { fearLevel = hr - 50; Debug.Log("hr: "+ hr); });
+        }
     }
 
 
@@ -44,14 +50,14 @@ public class Player : MonoBehaviour
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-        if (x > 0 || y > 0)
-            Debug.Log(x + ", " + y);
+        //if (x > 0 || y > 0)
+          //  Debug.Log(x + ", " + y);
 
         x *= playerSpeed;
         y *= playerSpeed;
         
-        if (x > 0 || y > 0)
-           Debug.Log(x + ", " + y);
+        //if (x > 0 || y > 0)
+          // Debug.Log(x + ", " + y);
 
 
 
