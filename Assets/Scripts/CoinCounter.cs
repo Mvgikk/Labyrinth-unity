@@ -6,6 +6,8 @@ using TMPro;
 public class CoinCounter : MonoBehaviour
 {
     private TextMeshProUGUI coinText;
+    public CoinCollector coinCollector;
+
 
     private void Start()
     {
@@ -14,6 +16,6 @@ public class CoinCounter : MonoBehaviour
 
     public void UpdateCoinCount(int count)
     {
-    coinText.text = "Coins: " + count;
+        coinText.text = "Coins: " + count + " / " + coinCollector.totalCoins;
     }
 }

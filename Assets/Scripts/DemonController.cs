@@ -17,7 +17,7 @@ public class DemonController : VersionedMonoBehaviour
 
     /// <summary>Current target index</summary>
     int index;
-
+    public AudioClip screechSound;
     IAstarAI agent;
     float switchTime = float.PositiveInfinity;
     public TextDisplayController textDisplay;
@@ -33,6 +33,8 @@ public class DemonController : VersionedMonoBehaviour
 
     public bool sensesPlayer = false;
     public bool debuffed = false;
+
+    private bool playsSoundEffect = false;
 
     protected override void Awake()
     {
@@ -101,6 +103,22 @@ public class DemonController : VersionedMonoBehaviour
         debuffed = true;
         Debug.Log("Debuffed");
     }
+    //private void PlayScreechSound()
+   // {
+      //  AudioSource.PlayClipAtPoint(screechSound, transform.position);
+    //}
+    IEnumerator PlaySoundAndWait(AudioClip sound)
+    {
+
+        playsSoundEffect = true;
+
+        AudioSource.PlayClipAtPoint(sound, playerTransform.position);
+        // Wait until the sound finishes playing
+        yield return new WaitForSeconds(sound.length);
+        playsSoundEffect = false;
+
+    }   
+
     void FixedUpdate()
     {
 
@@ -112,7 +130,11 @@ public class DemonController : VersionedMonoBehaviour
             sensesPlayer = true;
             textDisplay.UpdateText("Monster senses you!");
             FollowingUpdate();
-            soundManager.PlayMonsterScreechEffect();
+            //soundManager.PlayMonsterScreechEffect();
+            if (!playsSoundEffect) 
+            {
+                StartCoroutine(PlaySoundAndWait(screechSound));
+            }
         }
         else
         {

@@ -30,7 +30,8 @@ public class Player : MonoBehaviour
 
 
     private void Start()
-    {
+    {   
+        fearLevel = 60;
         boxCollider = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
         var er = GameObject.Find("ECGReceiver");
