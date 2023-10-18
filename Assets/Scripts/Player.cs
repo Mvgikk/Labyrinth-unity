@@ -23,14 +23,17 @@ public class Player : MonoBehaviour
 
     public AudioClip walkingSound;
 
+    public AudioClip deathSound;
+
     private AudioSource audioSource;
 
     public bool isWalking;
+    public bool isDead = false;
 
 
 
     private void Start()
-    {   
+    {
         fearLevel = 60;
         boxCollider = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
@@ -131,10 +134,17 @@ public class Player : MonoBehaviour
         }
 
         // game over condition
-        if (other.gameObject.tag == "Monster")
+        if (other.gameObject.tag == "Monster" && isDead == false)
         {
             Debug.Log("He got you!");
-            SceneManager.LoadScene("GameOverMenu");
+            isDead = true;
+            animator.SetBool("isDead", true);
+            audioSource.PlayOneShot(deathSound);
         }
+    }
+
+    public void ShowGameOverMenu()
+    {
+        SceneManager.LoadScene("GameOverMenu");
     }
 }
