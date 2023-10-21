@@ -136,12 +136,18 @@ public class Player : MonoBehaviour
         // game over condition
         if (other.gameObject.tag == "Monster" && isDead == false)
         {
-            Debug.Log("He got you!");
-            isDead = true;
-            animator.SetBool("isDead", true);
-            audioSource.PlayOneShot(deathSound);
+            Die();
         }
     }
+
+
+    public void Die()
+    {
+        isDead = true;
+        animator.SetBool("isDead", true);
+        audioSource.PlayOneShot(deathSound);
+    }
+
 
     public void ShowGameOverMenu()
     {
