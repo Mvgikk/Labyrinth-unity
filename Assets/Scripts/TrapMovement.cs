@@ -67,10 +67,7 @@ public class TrapMovement : MonoBehaviour
             if (player != null)
             {
 
-                Debug.Log("Trap wszedl");
-                //TODO gracz smierc
-                SceneManager.LoadScene("GameOverMenu");
-
+                player.Die();
             }
         }
     }
