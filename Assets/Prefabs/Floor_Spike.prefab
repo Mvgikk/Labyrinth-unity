@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5976871446592142873}
   - component: {fileID: 5976871446592142878}
   - component: {fileID: 5976871446592142875}
-  - component: {fileID: 5976871446592142874}
+  - component: {fileID: 6414063767310372622}
   m_Layer: 0
   m_Name: Floor_Spike
   m_TagString: Untagged
@@ -133,7 +133,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.119038515, y: 0.116479576}
   m_EdgeRadius: 0
---- !u!114 &5976871446592142874
+--- !u!114 &6414063767310372622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,8 +142,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5976871446592142879}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3514e7ff8b8859b40b36b1f46baf7eb4, type: 3}
+  m_Script: {fileID: 11500000, guid: f00eefbbf92e3d14d8d0a54831e06091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDefaultSpeed: 4
-  slowdownSpeed: 2

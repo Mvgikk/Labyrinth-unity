@@ -8,10 +8,10 @@ using TMPro;
 public class DemonController : VersionedMonoBehaviour
 {
     IAstarAI ai;
-    
-    //waypoints for patrolling of the demon
-    public Transform[] waypoints;
 
+    //waypoints for patrolling of the demon
+    public PatrolGizmoScript patrol;
+    private Transform[] waypoints;
     /// <summary>Time in seconds to wait at each target</summary>
     public float delay = 0;
 
@@ -35,6 +35,14 @@ public class DemonController : VersionedMonoBehaviour
     public bool debuffed = false;
 
     private bool playsSoundEffect = false;
+    private bool waypointsSet = false;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+
+    }
 
     protected override void Awake()
     {
@@ -42,39 +50,49 @@ public class DemonController : VersionedMonoBehaviour
         agent = GetComponent<IAstarAI>();
     }
 
+    private bool setWaypoints()
+    {
+        waypoints = patrol.GetWaypoints();
+        previousPosition = transform.position;
+        return (waypoints != null);
+    }
+
     /// <summary>Update is called once per frame</summary>
     void PatrolUpdate()
     {
-        if (waypoints.Length == 0) return;
-
-        bool search = false;
-
-        // Note: using reachedEndOfPath and pathPending instead of reachedDestination here because
-        // if the destination cannot be reached by the agent, we don't want it to get stuck, we just want it to get as close as possible and then move on.
-        if (agent.reachedEndOfPath && !agent.pathPending && float.IsPositiveInfinity(switchTime))
+        if (!waypointsSet)
         {
-            switchTime = Time.time + delay;
+            waypointsSet = setWaypoints();
+            if (waypointsSet)
+            {
+                Debug.Log("Ustawilem!");
+            }
         }
-
-        if (Time.time >= switchTime)
+        else
         {
-            index = index + 1;
-            search = true;
-            switchTime = float.PositiveInfinity;
+            if (waypoints.Length == 0) return;
+
+            bool search = false;
+
+            // Note: using reachedEndOfPath and pathPending instead of reachedDestination here because
+            // if the destination cannot be reached by the agent, we don't want it to get stuck, we just want it to get as close as possible and then move on.
+            if (agent.reachedEndOfPath && !agent.pathPending && float.IsPositiveInfinity(switchTime))
+            {
+                switchTime = Time.time + delay;
+            }
+
+            if (Time.time >= switchTime)
+            {
+                index = index + 1;
+                search = true;
+                switchTime = float.PositiveInfinity;
+            }
+
+            index = index % waypoints.Length;
+            agent.destination = waypoints[index].position;
+
+            if (search) agent.SearchPath();
         }
-
-        index = index % waypoints.Length;
-        agent.destination = waypoints[index].position;
-
-        if (search) agent.SearchPath();
-    }
-
-
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        previousPosition = transform.position;
     }
 
     void OnEnable()

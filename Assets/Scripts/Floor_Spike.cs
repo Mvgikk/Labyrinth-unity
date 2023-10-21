@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Floor_Spike : MonoBehaviour
 {
-    public float playerDefaultSpeed = 4.0f;
-    public float slowdownSpeed = 0.5f;
-
-
+    private bool spikesShown = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -16,24 +15,23 @@ public class Floor_Spike : MonoBehaviour
             if (player != null)
             {
 
-                Debug.Log("Kolce jest");
-                player.playerSpeed = slowdownSpeed;
-
+                Debug.Log("Kolce wszedl");
+                //TODO gracz smierc
+                if(spikesShown)
+                {
+                    player.Die();
+                }
             }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision) 
+    public void SpikesShow()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Player player = collision.gameObject.GetComponent<Player>();
-            if (player != null)
-            {
-                Debug.Log("Kolce wyszed");
-                player.playerSpeed = playerDefaultSpeed;
-            }
-        }
+        spikesShown = true;
     }
 
+    public void SpikesHide()
+    {
+        spikesShown = false;
+    }
 }
