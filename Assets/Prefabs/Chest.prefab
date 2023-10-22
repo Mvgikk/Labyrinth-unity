@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4712230473442015982}
   - component: {fileID: 4712230473442015981}
   - component: {fileID: 4712230473442015977}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Chest
   m_TagString: Chest
   m_Icon: {fileID: 0}
@@ -121,6 +121,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 4712230473442015982}
   interactionDistance: 2
+  playerLightController: {fileID: 0}
+  textDisplay: {fileID: 0}
+  hasInteracted: 0
 --- !u!61 &4712230473442015977
 BoxCollider2D:
   m_ObjectHideFlags: 0
