@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
 
 
         // Check if the walking state has changed
-        if (isWalking && !wasWalking && !audioSource.isPlaying)
+        if (isWalking && !audioSource.isPlaying)
         {
         // Player started walking
             audioSource.PlayOneShot(walkingSound);
