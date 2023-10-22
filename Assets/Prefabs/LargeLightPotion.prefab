@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 635314474593390263}
   - component: {fileID: 635314474593390262}
   - component: {fileID: 635314474593390261}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LargeLightPotion
   m_TagString: LargeLightPotion
   m_Icon: {fileID: 0}

@@ -7,6 +7,10 @@ public class ChestController : MonoBehaviour
 
  private Chest currentChest;
  public SoundManager soundManager;
+ 
+
+public TextDisplayController textDisplay;
+
 
 
     void Update()

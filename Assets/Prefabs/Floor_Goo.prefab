@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 3473206826237499356}
   - component: {fileID: 3473206826237499357}
   - component: {fileID: 3473206826237499358}
-  - component: {fileID: 5570001045694486116}
-  m_Layer: 0
+  - component: {fileID: 3200811903144685362}
+  m_Layer: 7
   m_Name: Floor_Goo
-  m_TagString: Untagged
+  m_TagString: Floor_Goo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.041879416
---- !u!114 &5570001045694486116
+--- !u!114 &3200811903144685362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3473206826237499352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3514e7ff8b8859b40b36b1f46baf7eb4, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a545ce3a862d5e47973661cf66a4800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerDefaultSpeed: 4
