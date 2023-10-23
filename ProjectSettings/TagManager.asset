@@ -11,6 +11,8 @@ TagManager:
   - Monster
   - Tag
   - Door
+  - Floor_Goo
+  - Floor_Spike
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - UI
   - Blocking
   - Interactable
-  - 
+  - PP
   - 
   - 
   - 
