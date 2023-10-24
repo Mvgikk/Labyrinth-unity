@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip coinCollectEffect;
     public AudioClip chestOpenEffect;
     public AudioClip monsterScreechSound;
+    public AudioClip boxEnterSound;
     public AudioSource audioSource;
 
     private static SoundManager soundManagerInstance;
@@ -49,6 +50,12 @@ public class SoundManager : MonoBehaviour
     {
         
         audioSource.PlayOneShot(monsterScreechSound);
+    }
+
+    public void PlayBoxEnterEffect()
+    {
+
+        audioSource.PlayOneShot(boxEnterSound);
     }
 
 }
