@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoxController : MonoBehaviour
 {
-    private Box currentBox;
+    public Box currentBox { set; get; }
     public SoundManager soundManager;
 
     void Update()
@@ -13,15 +13,6 @@ public class BoxController : MonoBehaviour
         {
             soundManager.PlayBoxEnterEffect();
             currentBox.Interact();
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Box box = collision.collider.GetComponent<Box>();
-        if (box != null)
-        {
-            currentBox = box;
         }
     }
 }

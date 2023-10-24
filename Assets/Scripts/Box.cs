@@ -4,10 +4,30 @@ using UnityEngine;
 
 public class Box : MonoBehaviour
 {
+    public bool playerIsHiding = false;
     public GameObject player;
-    public bool hasInteracted = false; //bool to check if player has already interacted with chest
+    public SoundManager soundManager;
     public void Interact()
     {
-        player.SetActive(false);
+        if (!playerIsHiding)
+        {
+            player.GetComponent<Player>().HidePlayer();
+            playerIsHiding = true;
+        }
+        else
+        {
+            player.GetComponent<Player>().ShowPlayer();
+            playerIsHiding = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        player.GetComponent<BoxController>().currentBox = this;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        player.GetComponent<BoxController>().currentBox = null;
     }
 }
