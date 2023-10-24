@@ -27,9 +27,12 @@ public class Player : MonoBehaviour
 
     private AudioSource audioSource;
 
+
+    public bool logHr = false;
     public bool isWalking;
     public bool isDead = false;
 
+    public bool isHidden = false;
 
 
     private void Start()
@@ -41,77 +44,83 @@ public class Player : MonoBehaviour
         if(er)
         {
             var comp = er.GetComponent<ECGReceiver>();
-            comp.receivedHR.AddListener((hr) => { fearLevel = hr - 50; Debug.Log("hr: "+ hr); });
+            comp.receivedHR.AddListener((hr) => { 
+                fearLevel = hr - 50;
+                if (logHr) Debug.Log("hr: "+ hr);
+            });
         }
     }
-
-
-
 
     private void FixedUpdate()
     {
         fearBarSlider.value = fearLevel;
 
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-        //if (x > 0 || y > 0)
-          //  Debug.Log(x + ", " + y);
-
-        x *= playerSpeed;
-        y *= playerSpeed;
-        
-        //if (x > 0 || y > 0)
-          // Debug.Log(x + ", " + y);
-
-
-
-         // Check if the player is walking
-        bool wasWalking = isWalking; // Store the previous state of isWalking
-        isWalking = (x != 0 || y != 0);
-        animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
-        animator.SetFloat("VerticalSpeed", Mathf.Abs(y));
-        
-        moveDelta = new Vector3(x, y, 0);
-
-        if (moveDelta.x > 0)
+        if (!isHidden)
         {
-            transform.localScale = Vector3.one;
+            float x = Input.GetAxisRaw("Horizontal");
+            float y = Input.GetAxisRaw("Vertical");
+
+
+            x *= playerSpeed;
+            y *= playerSpeed;
+
+            // Check if the player is walking
+            bool wasWalking = isWalking; // Store the previous state of isWalking
+            isWalking = (x != 0 || y != 0);
+            animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
+            animator.SetFloat("VerticalSpeed", Mathf.Abs(y));
+
+            moveDelta = new Vector3(x, y, 0);
+
+            if (moveDelta.x > 0)
+            {
+                transform.localScale = Vector3.one;
+            }
+            else if (moveDelta.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+
+            //check if can move in the vertical director by casting a collider box there. If null -> can move
+            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
+
+            if (hit.collider == null)
+            {
+                transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
+            }
+
+            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
+            if (hit.collider == null)
+            {
+                transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+            }
+
+
+            // Check if the walking state has changed
+            if (isWalking && !audioSource.isPlaying)
+            {
+                // Player started walking
+                audioSource.PlayOneShot(walkingSound);
+            }
+            else if (!isWalking && wasWalking)
+            {
+                // Player stopped walking
+                audioSource.Stop();
+            }
         }
-        else if (moveDelta.x < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
+    }
 
+    public void HidePlayer()
+    {
+        this.isHidden = true;
+        transform.localScale = new Vector3(0, 0, 0);
+        audioSource.Stop();
+    }
 
-
-
-        //check if can move in the vertical director by casting a collider box there. If null -> can move
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
-
-        if (hit.collider == null)
-        {
-            transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
-        }
-
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
-        if (hit.collider == null)
-        {
-            transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
-        }
-
-
-        // Check if the walking state has changed
-        if (isWalking && !audioSource.isPlaying)
-        {
-        // Player started walking
-            audioSource.PlayOneShot(walkingSound);
-        }
-        else if (!isWalking && wasWalking)
-        {
-        // Player stopped walking
-            audioSource.Stop();
-        }
-
+    public void ShowPlayer()
+    {
+        this.isHidden = false;
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
 
@@ -140,14 +149,12 @@ public class Player : MonoBehaviour
         }
     }
 
-
     public void Die()
     {
         isDead = true;
         animator.SetBool("isDead", true);
         audioSource.PlayOneShot(deathSound);
     }
-
 
     public void ShowGameOverMenu()
     {
