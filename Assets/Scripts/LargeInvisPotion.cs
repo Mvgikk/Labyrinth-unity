@@ -17,7 +17,7 @@ public class LargeInvisPotion : MonoBehaviour
 
             DemonController demonController = monster.GetComponent<DemonController>();
 
-            demonController.debuff();
+            //demonController.debuff();
 
             PlayDrinkSound();
 
