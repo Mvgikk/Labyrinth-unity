@@ -23,10 +23,5 @@ public class Exit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Player.keys_collected == 3)
-        {
-            //zmiana koloru na zielony
-        sprite.color = new Color (0, 1, 0, 1);
-        }
     }
 }

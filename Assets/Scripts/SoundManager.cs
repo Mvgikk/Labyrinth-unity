@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip chestOpenEffect;
     public AudioClip monsterScreechSound;
     public AudioClip boxEnterSound;
+    public AudioClip deathSound;
     public AudioSource audioSource;
 
     private static SoundManager soundManagerInstance;
@@ -56,6 +57,11 @@ public class SoundManager : MonoBehaviour
     {
 
         audioSource.PlayOneShot(boxEnterSound);
+    }
+        public void PlayDeathSound()
+    {
+
+        audioSource.PlayOneShot(deathSound);
     }
 
 }

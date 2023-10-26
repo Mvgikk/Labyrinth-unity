@@ -11,8 +11,8 @@ public class Player : MonoBehaviour
     public Slider fearBarSlider;
 
     Vector3 moveDelta;
-    public int keys_collected = 0;
-    //public Rigidbody2D rb;
+
+    public Rigidbody2D rb;
     public Animator animator;
 
     public float playerSpeed = 4.0f;
@@ -23,9 +23,11 @@ public class Player : MonoBehaviour
 
     public AudioClip walkingSound;
 
-    public AudioClip deathSound;
+
 
     private AudioSource audioSource;
+
+    public SoundManager soundManager;
 
 
     public bool logHr = false;
@@ -57,55 +59,59 @@ public class Player : MonoBehaviour
 
         if (!isHidden)
         {
+            
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
 
 
             x *= playerSpeed;
             y *= playerSpeed;
+  
 
             // Check if the player is walking
             bool wasWalking = isWalking; // Store the previous state of isWalking
             isWalking = (x != 0 || y != 0);
             animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
             animator.SetFloat("VerticalSpeed", Mathf.Abs(y));
-
-            moveDelta = new Vector3(x, y, 0);
-
-            if (moveDelta.x > 0)
+            if (!isDead)
             {
-                transform.localScale = Vector3.one;
-            }
-            else if (moveDelta.x < 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
+                moveDelta = new Vector3(x, y, 0);
 
-            //check if can move in the vertical director by casting a collider box there. If null -> can move
-            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
+                if (moveDelta.x > 0)
+                {
+                    transform.localScale = Vector3.one;
+                }
+                else if (moveDelta.x < 0)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1);
+                }
 
-            if (hit.collider == null)
-            {
-                transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
-            }
+                //check if can move in the vertical director by casting a collider box there. If null -> can move
+                hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
 
-            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
-            if (hit.collider == null)
-            {
-                transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
-            }
+                if (hit.collider == null)
+                {
+                    transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
+                }
+
+                hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
+                if (hit.collider == null)
+                {
+                    transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+                }
 
 
-            // Check if the walking state has changed
-            if (isWalking && !audioSource.isPlaying)
-            {
-                // Player started walking
-                audioSource.PlayOneShot(walkingSound);
-            }
-            else if (!isWalking && wasWalking)
-            {
-                // Player stopped walking
-                audioSource.Stop();
+                // Check if the walking state has changed
+                if (isWalking && !audioSource.isPlaying)
+                {
+                    // Player started walking
+                    audioSource.PlayOneShot(walkingSound);
+                }
+                else if (!isWalking && wasWalking)
+                {
+                    // Player stopped walking
+                    audioSource.Stop();
+                }
             }
         }
     }
@@ -126,21 +132,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) 
     {
-        if(other.gameObject.tag == "Walls")
-        {
-            //TODO utrata hp
 
-            Debug.Log("Wall hit");
-        } 
-        if(other.gameObject.tag == "Keys")
-        {
-            keys_collected += 1;
-            Destroy(other.gameObject);
-        }  
-        if(other.gameObject.tag == "Exit" && keys_collected == 3)
-        {
-            Debug.Log("Win");
-        }
 
         // game over condition
         if (other.gameObject.tag == "Monster" && isDead == false && isHidden == false)
@@ -151,13 +143,27 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
+        //nwm nie dziala jak sie trzyma guzik
+        if(!isDead){
         isDead = true;
+        soundManager.PlayDeathSound();
         animator.SetBool("isDead", true);
-        audioSource.PlayOneShot(deathSound);
+        audioSource.Stop();
+        DelayedRestart(0.5f);
+
+
+        }
+
     }
 
     public void ShowGameOverMenu()
     {
         SceneManager.LoadScene("GameOverMenu");
     }
+    IEnumerator DelayedRestart(float delay)
+{
+    yield return new WaitForSeconds(delay);
+    ShowGameOverMenu();
+
+}
 }
