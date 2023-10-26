@@ -143,7 +143,7 @@ public class Player : MonoBehaviour
         }
 
         // game over condition
-        if (other.gameObject.tag == "Monster" && isDead == false)
+        if (other.gameObject.tag == "Monster" && isDead == false && isHidden == false)
         {
             Die();
         }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5683314011444581253}
   - component: {fileID: 5683314011444581258}
   - component: {fileID: 5683314011444581254}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HidingBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

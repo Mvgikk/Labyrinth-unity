@@ -9,13 +9,12 @@ public class DemonController : VersionedMonoBehaviour
 {
     IAstarAI ai;
 
-    //waypoints for patrolling of the demon
+    //waypoints for patrolling of the demon/monster
     public PatrolGizmoScript patrol;
+
     private Transform[] waypoints;
-    /// <summary>Time in seconds to wait at each target</summary>
     public float delay = 0;
 
-    /// <summary>Current target index</summary>
     int index;
     public AudioClip screechSound;
     IAstarAI agent;
@@ -25,24 +24,19 @@ public class DemonController : VersionedMonoBehaviour
     public Animator animator;
     public SoundManager soundManager;
     public Pathfinding.AIPath aiPath;
-    public Transform playerTransform;
+    private Transform playerTransform;
+    public GameObject player;
     public Transform monsterTransform;
     public float visionRange = 10;
+    public float isCloseRange = 5;
 
     public Slider fearBarSlider;
 
     public bool sensesPlayer = false;
-    public bool debuffed = false;
 
     private bool playsSoundEffect = false;
     private bool waypointsSet = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-
-    }
+    private bool isWaiting = false;
 
     protected override void Awake()
     {
@@ -57,20 +51,20 @@ public class DemonController : VersionedMonoBehaviour
         return (waypoints != null);
     }
 
-    /// <summary>Update is called once per frame</summary>
     void PatrolUpdate()
     {
         if (!waypointsSet)
         {
             waypointsSet = setWaypoints();
-            if (waypointsSet)
-            {
-                Debug.Log("Ustawilem!");
-            }
         }
-        else
+        else if (!isWaiting)
         {
             if (waypoints.Length == 0) return;
+
+            if (agent.reachedEndOfPath)
+            {
+                StartCoroutine(Wait());
+            }
 
             bool search = false;
 
@@ -95,6 +89,15 @@ public class DemonController : VersionedMonoBehaviour
         }
     }
 
+    IEnumerator Wait()
+    {
+        isWaiting = true;  //set the bool to stop moving
+        animator.SetBool("isWaiting", isWaiting);
+        yield return new WaitForSeconds(3); // wait for 5 sec
+        isWaiting = false; // set the bool to start moving
+        animator.SetBool("isWaiting", isWaiting);
+    }
+
     void OnEnable()
     {
         ai = GetComponent<IAstarAI>();
@@ -110,21 +113,11 @@ public class DemonController : VersionedMonoBehaviour
         if (ai != null && sensesPlayer) ai.onSearchPath -= FollowingUpdate;
     }
 
-    /// <summary>Updates the AI's destination every frame</summary>
     void FollowingUpdate()
     {
         if (playerTransform != null && ai != null) ai.destination = playerTransform.position;
     }
 
-    public void debuff()
-    {
-        debuffed = true;
-        Debug.Log("Debuffed");
-    }
-    //private void PlayScreechSound()
-   // {
-      //  AudioSource.PlayClipAtPoint(screechSound, transform.position);
-    //}
     IEnumerator PlaySoundAndWait(AudioClip sound)
     {
 
@@ -139,16 +132,21 @@ public class DemonController : VersionedMonoBehaviour
 
     void FixedUpdate()
     {
-
+        playerTransform = player.GetComponent<Transform>();
         visionRange = fearBarSlider.value;
 
-        if(Vector3.Distance (playerTransform.position, monsterTransform.position) < visionRange)
+        bool isHidden = player.GetComponent<Player>().isHidden;
+        bool isClose = Vector3.Distance(playerTransform.position, monsterTransform.position) < isCloseRange;
+        bool isInRange = Vector3.Distance(playerTransform.position, monsterTransform.position) < visionRange;
+
+
+        //if ((isHidden && isClose) || (!isHidden && isInRange))
+        if (!isHidden && isInRange)
         {
             Debug.Log("Senses Player");
             sensesPlayer = true;
             textDisplay.UpdateText("Monster senses you!");
             FollowingUpdate();
-            //soundManager.PlayMonsterScreechEffect();
             if (!playsSoundEffect) 
             {
                 StartCoroutine(PlaySoundAndWait(screechSound));
@@ -165,7 +163,6 @@ public class DemonController : VersionedMonoBehaviour
         {
             
             animator.SetFloat("HorizontalSpeed",1);
-            //Debug.Log(aiPath.velocity.x);
             setTurnSide();
             previousPosition = transform.position;
         }
