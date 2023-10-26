@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensityIncreaseAmount: 1
+  intensityRadius: 0.05
   drinkSound: {fileID: 8300000, guid: 03b580986690ce540828cad7a70af93d, type: 3}
   textDisplay: {fileID: 0}
 --- !u!212 &635314474593390263

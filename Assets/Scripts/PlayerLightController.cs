@@ -5,9 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerLightController : MonoBehaviour
 {
-    public float decreaseRate = 0.05f; // Rate at which the light intensity decreases per second
+    public float decreaseRate = 0.03f; // Rate at which the light intensity decreases per second
     public Light2D playerLight;
-    public float minValue = 0.65f;
+    public float minValue = 0.3f;
 
     private void Start()
     {

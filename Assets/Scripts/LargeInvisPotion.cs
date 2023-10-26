@@ -13,11 +13,11 @@ public class LargeInvisPotion : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            GameObject monster = GameObject.Find("Monster");
+            GameObject player = GameObject.Find("Player");
 
-            DemonController demonController = monster.GetComponent<DemonController>();
+            Player playerScript = player.GetComponent<Player>();
 
-            //demonController.debuff();
+            playerScript.HidePlayer();
 
             PlayDrinkSound();
 

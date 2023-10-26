@@ -8,7 +8,9 @@ using TMPro;
 public class LargeLightPotion : MonoBehaviour
 {
     public float intensityIncreaseAmount = 1f; // Amount to increase the light intensity
+    public float intensityRadius = 0.05f; // Amount to increase the light radius
     public AudioClip drinkSound; // Sound effect to play when drinking the potion
+
 
     public TextDisplayController textDisplay;
 
@@ -21,7 +23,8 @@ public class LargeLightPotion : MonoBehaviour
             Light2D playerLight = collision.GetComponent<Light2D>();
             if (playerLight != null)
             {
-                playerLight.intensity += intensityIncreaseAmount;
+                playerLight.intensity += intensityIncreaseAmount;             
+                playerLight.pointLightOuterRadius += intensityIncreaseAmount;             
                 PlayDrinkSound();
                 if(!hasDisplayedText)
                 {
