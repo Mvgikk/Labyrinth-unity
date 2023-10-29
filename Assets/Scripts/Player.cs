@@ -22,7 +22,10 @@ public class Player : MonoBehaviour
     private BoxCollider2D boxCollider;
 
     public AudioClip walkingSound;
+
     public AudioClip gooWalkingSound;
+
+    public MapController mapController;
 
     private AudioSource audioSource;
 
@@ -55,48 +58,48 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         fearBarSlider.value = fearLevel;
-
-        if (!isHidden)
-        {
-            
-            float x = Input.GetAxisRaw("Horizontal");
-            float y = Input.GetAxisRaw("Vertical");
-
-
-            x *= playerSpeed;
-            y *= playerSpeed;
-  
-
-            // Check if the player is walking
-            bool wasWalking = isWalking; // Store the previous state of isWalking
-            isWalking = (x != 0 || y != 0);
-            animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
-            animator.SetFloat("VerticalSpeed", Mathf.Abs(y));
-            if (!isDead)
+        if (!mapController.isMapVisible){
+            if (!isHidden)
             {
-                moveDelta = new Vector3(x, y, 0);
+                
+                float x = Input.GetAxisRaw("Horizontal");
+                float y = Input.GetAxisRaw("Vertical");
 
-                if (moveDelta.x > 0)
-                {
-                    transform.localScale = Vector3.one;
-                }
-                else if (moveDelta.x < 0)
-                {
-                    transform.localScale = new Vector3(-1, 1, 1);
-                }
+                x *= playerSpeed;
+                y *= playerSpeed;
+    
 
-                //check if can move in the vertical director by casting a collider box there. If null -> can move
-                hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
-
-                if (hit.collider == null)
+                // Check if the player is walking
+                bool wasWalking = isWalking; // Store the previous state of isWalking
+                isWalking = (x != 0 || y != 0);
+                animator.SetFloat("HorizontalSpeed", Mathf.Abs(x));
+                animator.SetFloat("VerticalSpeed", Mathf.Abs(y));
+                if (!isDead)
                 {
-                    transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
-                }
+                    moveDelta = new Vector3(x, y, 0);
 
-                hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
-                if (hit.collider == null)
-                {
-                    transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+                    if (moveDelta.x > 0)
+                    {
+                        transform.localScale = Vector3.one;
+                    }
+                    else if (moveDelta.x < 0)
+                    {
+                        transform.localScale = new Vector3(-1, 1, 1);
+                    }
+
+                    //check if can move in the vertical director by casting a collider box there. If null -> can move
+                    hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
+
+                    if (hit.collider == null)
+                    {
+                        transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
+                    }
+
+                    hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Walls"));
+                    if (hit.collider == null)
+                    {
+                        transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+                    }
                 }
 
                 if (isWalking)
