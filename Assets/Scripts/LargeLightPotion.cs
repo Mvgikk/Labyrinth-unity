@@ -7,7 +7,7 @@ using TMPro;
 
 public class LargeLightPotion : MonoBehaviour
 {
-    public float intensityIncreaseAmount = 1f; // Amount to increase the light intensity
+    public float intensityIncreaseAmount = 0.3f; // Amount to increase the light intensity
     public float intensityRadius = 0.05f; // Amount to increase the light radius
     public AudioClip drinkSound; // Sound effect to play when drinking the potion
 
@@ -28,7 +28,7 @@ public class LargeLightPotion : MonoBehaviour
                 PlayDrinkSound();
                 if(!hasDisplayedText)
                 {
-                textDisplay.UpdateText("Potions increase player's light intesity");
+                //textDisplay.UpdateText("Potions increase player's light intesity");
                 hasDisplayedText = true; 
                 }
                // PlayEffect();

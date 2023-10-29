@@ -62,15 +62,15 @@ public class SightTextController : MonoBehaviour
                     break;
                 case "Floor_Goo":
                     Debug.Log("widzi sluz");
-                    textDisplay.UpdateText("Goo slows you.\n Watch out!");
+                    textDisplay.UpdateText("Goo slows you.");
                     break;
                 case "Floor_Spike":
                     Debug.Log("widzi kolce");
-                    textDisplay.UpdateText("You better not step on these!");
+                    textDisplay.UpdateText("Better not step on these!");
                     break;
                 case "LargeLightPotion":
                     Debug.Log("widzi pota");
-                    textDisplay.UpdateText("Drink it and see what happens");
+                    textDisplay.UpdateText("Potions increase vision");
                     break;
                 default:
                     Debug.Log("default case");
