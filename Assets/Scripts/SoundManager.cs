@@ -13,6 +13,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip deathSound;
     public AudioSource audioSource;
 
+    public AudioClip typeWriterEffect;
+
     private static SoundManager soundManagerInstance;
 
     private void Awake() 
@@ -64,4 +66,14 @@ public class SoundManager : MonoBehaviour
         audioSource.PlayOneShot(deathSound);
     }
 
+    public void PlayTypeWriterEffect()
+    {
+
+        audioSource.PlayOneShot(typeWriterEffect);
+    }
+
+    public void StopPlaying()
+    {
+        audioSource.Stop();
+    }
 }

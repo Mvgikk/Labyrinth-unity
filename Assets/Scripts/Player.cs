@@ -145,11 +145,16 @@ public class Player : MonoBehaviour
     {
         //nwm nie dziala jak sie trzyma guzik
         if(!isDead){
-        isDead = true;
         soundManager.PlayDeathSound();
+        isWalking=false;
+        isDead = true;
         animator.SetBool("isDead", true);
+        //animator.enabled=false;
+        rb.bodyType= RigidbodyType2D.Static;
         audioSource.Stop();
+        //ShowGameOverMenu();
         DelayedRestart(0.5f);
+        
 
 
         }
@@ -163,6 +168,7 @@ public class Player : MonoBehaviour
     IEnumerator DelayedRestart(float delay)
 {
     yield return new WaitForSeconds(delay);
+    //animator.enabled=false;
     ShowGameOverMenu();
 
 }
