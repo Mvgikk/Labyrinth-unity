@@ -59,23 +59,23 @@ public class SightTextController : MonoBehaviour
             {
                 case "Chest":
                     Debug.Log("widzi skrzynie");
-                    textDisplay.UpdateText("This can help you get ouf this place...");
+                    textDisplay.UpdateText("I wonder what is inside. \n (E to interact)");
                     break;
                 case "Floor_Goo":
                     Debug.Log("widzi sluz");
-                    textDisplay.UpdateText("Don't let this slow you down");
+                    textDisplay.UpdateText("This place looks nasty");
                     break;
                 case "Floor_Spike":
                     Debug.Log("widzi kolce");
-                    textDisplay.UpdateText("Better do not step on these!");
+                    textDisplay.UpdateText("I better avoid these..");
                     break;
                 case "LargeLightPotion":
                     Debug.Log("widzi pota");
-                    textDisplay.UpdateText("This potion can help you see danger better");
+                    textDisplay.UpdateText("Oh, a Light Potion.");
                     break;
                 case "HidingBox":
                     Debug.Log("widzi skrzynke");
-                    textDisplay.UpdateText("This box looks like a good place to hide");
+                    textDisplay.UpdateText("Maybe i could hide in this box");
                     break;
                 default:
                     Debug.Log("default case");

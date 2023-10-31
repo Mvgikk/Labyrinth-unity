@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoxController : MonoBehaviour
 {
-    public Box currentBox { set; get; }
+    public HidingBox currentBox { set; get; }
     public SoundManager soundManager;
 
     void Update()

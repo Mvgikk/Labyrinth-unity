@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Box : MonoBehaviour
+public class HidingBox : MonoBehaviour
 {
     public bool playerIsHiding = false;
     public GameObject player;

@@ -145,7 +145,8 @@ public class DemonController : VersionedMonoBehaviour
         {
             Debug.Log("Senses Player");
             sensesPlayer = true;
-            textDisplay.UpdateText("Monster senses you!");
+            //textDisplay.UpdateText("Monster senses you!");
+            textDisplay.displayText.text="Monster Senses you!";
             FollowingUpdate();
             if (!playsSoundEffect) 
             {
