@@ -20,6 +20,7 @@ public class SightTextController : MonoBehaviour
         hasSeenObjectDictionary["Floor_Spike"] = false;
         hasSeenObjectDictionary["LargeLightPotion"] = false;
         hasSeenObjectDictionary["HidingBox"] = false;
+        hasSeenObjectDictionary["Scroll"] = false;
     }
 
 
@@ -75,7 +76,11 @@ public class SightTextController : MonoBehaviour
                     break;
                 case "HidingBox":
                     Debug.Log("widzi skrzynke");
-                    textDisplay.UpdateText("Maybe i could hide in this box");
+                    textDisplay.UpdateText("Maybe i could hide in this box \n (E to interact)");
+                    break;
+                case "Scroll":
+                    Debug.Log("widzi scroll");
+                    textDisplay.UpdateText("This might help me escape.. \n I hope so");
                     break;
                 default:
                     Debug.Log("default case");

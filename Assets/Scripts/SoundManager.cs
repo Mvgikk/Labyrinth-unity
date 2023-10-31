@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip monsterScreechSound;
     public AudioClip boxEnterSound;
     public AudioClip deathSound;
+    public AudioClip scrollCollectSound;
     public AudioSource audioSource;
 
     public AudioClip typeWriterEffect;
@@ -70,6 +71,12 @@ public class SoundManager : MonoBehaviour
     {
 
         audioSource.PlayOneShot(typeWriterEffect);
+    }
+
+    public void PlayScrollCollectEffect()
+    {
+
+        audioSource.PlayOneShot(scrollCollectSound);
     }
 
     public void StopPlaying()
