@@ -161,16 +161,16 @@ public class DemonController : VersionedMonoBehaviour
 
         if (transform.position.x != previousPosition.x)
         {
-            
-            animator.SetFloat("HorizontalSpeed",1);
+            isWaiting = false;
+            //animator.SetFloat("HorizontalSpeed",1);
             setTurnSide();
             previousPosition = transform.position;
         }
 
         if (transform.position.y != previousPosition.y)
         {
-            
-            animator.SetFloat("VerticalSpeed",1);
+            isWaiting = false;
+            //animator.SetFloat("VerticalSpeed",1);
             previousPosition = transform.position;
         }
 
