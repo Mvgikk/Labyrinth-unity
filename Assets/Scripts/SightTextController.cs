@@ -80,7 +80,7 @@ public class SightTextController : MonoBehaviour
                     break;
                 case "Scroll":
                     Debug.Log("widzi scroll");
-                    textDisplay.UpdateText("This might help me escape \n I hope so");
+                    textDisplay.UpdateText("This might help me escape.. \n I hope so");
                     break;
                 default:
                     Debug.Log("default case");
