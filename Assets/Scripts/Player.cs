@@ -22,8 +22,7 @@ public class Player : MonoBehaviour
     private BoxCollider2D boxCollider;
 
     public AudioClip walkingSound;
-
-
+    public AudioClip gooWalkingSound;
 
     private AudioSource audioSource;
 
@@ -35,7 +34,7 @@ public class Player : MonoBehaviour
     public bool isDead = false;
 
     public bool isHidden = false;
-
+    public bool isInGoo = false;
 
     private void Start()
     {
@@ -100,14 +99,28 @@ public class Player : MonoBehaviour
                     transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
                 }
 
-
-                // Check if the walking state has changed
-                if (isWalking && !audioSource.isPlaying)
+                if (isWalking)
                 {
-                    // Player started walking
-                    audioSource.PlayOneShot(walkingSound);
+                    if (isInGoo)
+                    {
+                        if (!audioSource.isPlaying || audioSource.clip != gooWalkingSound)
+                        {
+                            // Player started walking in goo
+                            audioSource.clip = gooWalkingSound;
+                            audioSource.Play();
+                        }
+                    }
+                    else
+                    {
+                        if (!audioSource.isPlaying || audioSource.clip != walkingSound)
+                        {
+                            // Player started walking
+                            audioSource.clip = walkingSound;
+                            audioSource.Play();
+                        }
+                    }
                 }
-                else if (!isWalking && wasWalking)
+                else if (wasWalking)
                 {
                     // Player stopped walking
                     audioSource.Stop();

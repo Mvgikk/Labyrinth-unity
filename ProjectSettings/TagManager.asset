@@ -13,6 +13,7 @@ TagManager:
   - Door
   - Floor_Goo
   - Floor_Spike
+  - HidingBox
   layers:
   - Default
   - TransparentFX

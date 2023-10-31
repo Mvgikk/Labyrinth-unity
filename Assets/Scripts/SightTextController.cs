@@ -19,6 +19,7 @@ public class SightTextController : MonoBehaviour
         hasSeenObjectDictionary["Floor_Goo"] = false;
         hasSeenObjectDictionary["Floor_Spike"] = false;
         hasSeenObjectDictionary["LargeLightPotion"] = false;
+        hasSeenObjectDictionary["HidingBox"] = false;
     }
 
 
@@ -58,19 +59,23 @@ public class SightTextController : MonoBehaviour
             {
                 case "Chest":
                     Debug.Log("widzi skrzynie");
-                    textDisplay.UpdateText("Click E to open chest.\n It may increase your vision.");
+                    textDisplay.UpdateText("This can help you get ouf this place...");
                     break;
                 case "Floor_Goo":
                     Debug.Log("widzi sluz");
-                    textDisplay.UpdateText("Goo slows you.");
+                    textDisplay.UpdateText("Don't let this slow you down");
                     break;
                 case "Floor_Spike":
                     Debug.Log("widzi kolce");
-                    textDisplay.UpdateText("Better not step on these!");
+                    textDisplay.UpdateText("Better do not step on these!");
                     break;
                 case "LargeLightPotion":
                     Debug.Log("widzi pota");
-                    textDisplay.UpdateText("Potions increase vision");
+                    textDisplay.UpdateText("This potion can help you see danger better");
+                    break;
+                case "HidingBox":
+                    Debug.Log("widzi skrzynke");
+                    textDisplay.UpdateText("This box looks like a good place to hide");
                     break;
                 default:
                     Debug.Log("default case");

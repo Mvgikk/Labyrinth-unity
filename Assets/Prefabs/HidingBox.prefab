@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5683314011444581254}
   m_Layer: 7
   m_Name: HidingBox
-  m_TagString: Untagged
+  m_TagString: HidingBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

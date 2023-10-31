@@ -16,7 +16,8 @@ public class Floor_Goo : MonoBehaviour
             if (player != null)
             {
 
-                Debug.Log("W mazi jest");
+                player.isInGoo = true;
+                Debug.Log("Chlop jest w mazi");
                 player.playerSpeed = slowdownSpeed;
 
             }
@@ -30,7 +31,8 @@ public class Floor_Goo : MonoBehaviour
             Player player = collision.gameObject.GetComponent<Player>();
             if (player != null)
             {
-                Debug.Log("Z mazi wyszed");
+                player.isInGoo = false;
+                Debug.Log("Chlop wyszedl z mazi");
                 player.playerSpeed = playerDefaultSpeed;
             }
         }
