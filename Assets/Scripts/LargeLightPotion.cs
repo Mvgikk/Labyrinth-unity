@@ -23,8 +23,8 @@ public class LargeLightPotion : MonoBehaviour
             Light2D playerLight = collision.GetComponent<Light2D>();
             if (playerLight != null)
             {
-                playerLight.intensity += intensityIncreaseAmount;             
-                playerLight.pointLightOuterRadius += intensityIncreaseAmount;             
+                playerLight.intensity = 1;             
+                playerLight.pointLightOuterRadius += 1;             
                 PlayDrinkSound();
                 if(!hasDisplayedText)
                 {
