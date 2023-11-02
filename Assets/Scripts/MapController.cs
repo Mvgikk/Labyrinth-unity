@@ -8,6 +8,7 @@ public class MapController : MonoBehaviour
     public GameObject map;
     public GameObject mapLight;
     public bool isMapVisible = false;
+    public bool hasCollectedAllScrolls = false;
 
     private void Start()
     {
@@ -15,18 +16,26 @@ public class MapController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if(hasCollectedAllScrolls)
         {
-            ToggleMinimap(!isMapVisible);
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                ToggleMinimap(!isMapVisible);
+            }
         }
+
 
 
     }
 
     private void ToggleMinimap(bool showMap)
     {
-        map.SetActive(showMap);
-        mapLight.SetActive(showMap);
-        isMapVisible = showMap;
+        if(hasCollectedAllScrolls)
+        {
+            map.SetActive(showMap);
+            mapLight.SetActive(showMap);
+            isMapVisible = showMap;
+        }
+
     }
 }

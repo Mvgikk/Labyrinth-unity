@@ -15,6 +15,7 @@ TagManager:
   - Floor_Spike
   - HidingBox
   - Scroll
+  - Floor_Escape
   layers:
   - Default
   - TransparentFX

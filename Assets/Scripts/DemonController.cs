@@ -38,6 +38,8 @@ public class DemonController : VersionedMonoBehaviour
     private bool waypointsSet = false;
     private bool isWaiting = false;
 
+    private Coroutine displayCoroutine;
+
     protected override void Awake()
     {
         base.Awake();
@@ -129,6 +131,12 @@ public class DemonController : VersionedMonoBehaviour
         playsSoundEffect = false;
 
     }   
+    IEnumerator ClearTextAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        textDisplay.displayText.text = ""; // Clear the text
+        
+    }
 
     void FixedUpdate()
     {
@@ -147,6 +155,11 @@ public class DemonController : VersionedMonoBehaviour
             sensesPlayer = true;
             //textDisplay.UpdateText("Monster senses you!");
             textDisplay.displayText.text="Monster Senses you!";
+            if (displayCoroutine != null)
+            {
+                StopCoroutine(displayCoroutine); // Stop the coroutine if it's already running
+            }
+            displayCoroutine = StartCoroutine(ClearTextAfterDelay(3f));
             FollowingUpdate();
             if (!playsSoundEffect) 
             {
