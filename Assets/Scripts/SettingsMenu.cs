@@ -60,11 +60,11 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetSimulation (bool isSimulated)
     {
-
+        SimulationSettings.isSimulated = isSimulated;
     }
 
     public void SetSimulationLevel (int simulationIndex)
     {
-
+        SimulationSettings.simulationLevel = (SimulationLevel)simulationIndex;
     }
 }
