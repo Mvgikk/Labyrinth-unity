@@ -23,32 +23,54 @@ public class HeartRateGenerator : MonoBehaviour
 
     void Start()
     {
-        hrValue = Random.Range(MinValue, MaxValue);
-        DontDestroyOnLoad(this);
-
-        /*
-         * Remove existing device receiving object.
-         */
-        var ecgReceiver = GameObject.Find("ECGReceiver");
-        if (ecgReceiver != null)
-            Destroy(ecgReceiver);
-
-        /* 
-         * Rename this game object to "ECGReceiver"
-         * It makes that we don't have to change name of game object in scripts
-         * in receiving heart rate measurement.
-         */
-        this.gameObject.name = "ECGReceiver";
-
-        var ecgReceiverScript = GetComponent<ECGReceiver>();
-        if (ecgReceiverScript != null)
+        if (SimulationSettings.isSimulated)
         {
-            receivedHR = ecgReceiverScript.receivedHR;
-            return;
-        }
+            switch (SimulationSettings.simulationLevel)
+            {
+                case SimulationLevel.Low:
+                    MinValue = 60;
+                    MaxValue = 90;
+                    break;
+                case SimulationLevel.Medium:
+                    MinValue = 80;
+                    MaxValue = 120;
+                    break;
+                case SimulationLevel.High:
+                    MinValue = 110;
+                    MaxValue = 160;
+                    break;
+            }
+            hrValue = Random.Range(MinValue, MaxValue);
+            DontDestroyOnLoad(this);
 
-        this.gameObject.SetActive(false);
-        Debug.LogError($"{GetType().Name}: Didn't found ECG Receiver script.");
+            /*
+             * Remove existing device receiving object.
+             */
+            var ecgReceiver = GameObject.Find("ECGReceiver");
+            if (ecgReceiver != null)
+                Destroy(ecgReceiver);
+
+            /* 
+             * Rename this game object to "ECGReceiver"
+             * It makes that we don't have to change name of game object in scripts
+             * in receiving heart rate measurement.
+             */
+            this.gameObject.name = "ECGReceiver";
+
+            var ecgReceiverScript = GetComponent<ECGReceiver>();
+            if (ecgReceiverScript != null)
+            {
+                receivedHR = ecgReceiverScript.receivedHR;
+                return;
+            }
+
+            this.gameObject.SetActive(false);
+            Debug.LogError($"{GetType().Name}: Didn't found ECG Receiver script.");
+        }
+        else
+        {
+            this.enabled = false;
+        }
     }
 
     void Update()
