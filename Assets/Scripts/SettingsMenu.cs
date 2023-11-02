@@ -58,5 +58,13 @@ public class SettingsMenu : MonoBehaviour
         Screen.fullScreen = isFullscreen;
     }
 
-    
+    public void SetSimulation (bool isSimulated)
+    {
+
+    }
+
+    public void SetSimulationLevel (int simulationIndex)
+    {
+
+    }
 }
