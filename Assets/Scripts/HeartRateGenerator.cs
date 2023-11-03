@@ -23,10 +23,13 @@ public class HeartRateGenerator : MonoBehaviour
 
     void Start()
     {
+
         Debug.Log("Generator is " + SimulationSettings.isSimulated + " and i on level: " + SimulationSettings.simulationLevel);
-        if (SimulationSettings.isSimulated)
+        //if (SimulationSettings.isSimulated) zmienic na to potem
+        if (true)
         {
-            switch (SimulationSettings.simulationLevel)
+            //switch (SimulationSettings.simulationLevel) // na to potem
+            switch (SimulationLevel.Low)
             {
                 case SimulationLevel.Low:
                     MinValue = 60;
