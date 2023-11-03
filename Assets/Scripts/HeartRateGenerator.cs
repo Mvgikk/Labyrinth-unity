@@ -33,11 +33,11 @@ public class HeartRateGenerator : MonoBehaviour
                     MaxValue = 90;
                     break;
                 case SimulationLevel.Medium:
-                    MinValue = 80;
-                    MaxValue = 120;
+                    MinValue = 90;
+                    MaxValue = 140;
                     break;
                 case SimulationLevel.High:
-                    MinValue = 110;
+                    MinValue = 130;
                     MaxValue = 160;
                     break;
             }
