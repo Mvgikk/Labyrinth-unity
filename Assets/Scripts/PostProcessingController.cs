@@ -46,7 +46,7 @@ public class PostProcessingController : MonoBehaviour
         //fearGlitchAnimator.SetFloat("FearLevel", fearLevel);
 
         //digitalGlitchVolume.intensity.value = Mathf.Lerp(0f, 1f, fearLevel / 100f); 
-        if(fearLevel > 90)
+        if(fearLevel > 85)
         {
             volume.enabled = true;
             if (!playsSoundEffect) 
