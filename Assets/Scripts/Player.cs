@@ -39,29 +39,55 @@ public class Player : MonoBehaviour
     public bool isHidden = false;
     public bool isInGoo = false;
 
+    private int MinValue = 60;
+
+    private int MaxValue = 90;
+
     private void Start()
     {
-        fearLevel = 60;
-        boxCollider = GetComponent<BoxCollider2D>();
-        audioSource = GetComponent<AudioSource>();
-        var er = GameObject.Find("ECGReceiver");
-        if(er)
-        {
-            Debug.Log("mam ECG receiver");
-            var comp = er.GetComponent<ECGReceiver>();
-            comp.receivedHR.AddListener((hr) => { 
-                fearLevel = hr - 50;
-                if (logHr) Debug.Log("hr: "+ hr);
-            });
-        }
-        else
-        {
-            Debug.Log("NIE ZNALAZ£EM");
-        }
+        fearLevel = 20;
+        //boxCollider = GetComponent<BoxCollider2D>();
+        //audioSource = GetComponent<AudioSource>();
+        //var er = GameObject.Find("ECGReceiver");
+        //if(er)
+        //{
+        //    Debug.Log("mam ECG receiver");
+        //    var comp = er.GetComponent<ECGReceiver>();
+        //    comp.receivedHR.AddListener((hr) => { 
+        //        fearLevel = hr - 50;
+        //        if (logHr) Debug.Log("hr: "+ hr);
+        //    });
+        //}
+        //else
+        //{
+        //    Debug.Log("NIE ZNALAZ£EM");
+        //}
     }
 
     private void FixedUpdate()
     {
+        //fearBarSlider.value = fearLevel;
+        if (SimulationSettings.isSimulated) // zmienic na to potem
+        //if (true)
+        {
+            switch (SimulationSettings.simulationLevel) // na to potem
+            //switch (SimulationLevel.Low)
+            {
+                case SimulationLevel.Low:
+                    MinValue = 60;
+                    MaxValue = 90;
+                    break;
+                case SimulationLevel.Medium:
+                    MinValue = 90;
+                    MaxValue = 140;
+                    break;
+                case SimulationLevel.High:
+                    MinValue = 130;
+                    MaxValue = 160;
+                    break;
+            }
+        fearLevel = Random.Range(MinValue, MaxValue);
+        }
         fearBarSlider.value = fearLevel;
         if (!mapController.isMapVisible){
             if (!isHidden)
@@ -184,9 +210,9 @@ public class Player : MonoBehaviour
 
     public void ShowGameOverMenu()
     {
-        var ecgReceiver = GameObject.Find("ECGReceiver");
-        if (ecgReceiver != null)
-            Destroy(ecgReceiver);
+        //var ecgReceiver = GameObject.Find("ECGReceiver");
+        //if (ecgReceiver != null)
+        //    Destroy(ecgReceiver);
         SceneManager.LoadScene("GameOverMenu");
     }
     IEnumerator DelayedRestart(float delay)
