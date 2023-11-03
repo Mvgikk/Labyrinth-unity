@@ -6,12 +6,12 @@ using TMPro;
 public class TextDisplayController : MonoBehaviour
 {
     public TextMeshProUGUI displayText;
-    public float displayDuration = 3f;
+    public float displayDuration = 6f;
     private Coroutine displayCoroutine;
     private Coroutine typeWriterCoroutine;
     public SoundManager soundManager;
     [SerializeField] float delayBeforeStart = 0f;
-	[SerializeField] float timeBtwChars = 0.1f;
+	[SerializeField] float timeBtwChars = 0.12f;
 	[SerializeField] string leadingChar = "";
 	[SerializeField] bool leadingCharBeforeDelay = false;
 
