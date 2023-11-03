@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Floor_Escape : MonoBehaviour
 {
@@ -15,8 +16,8 @@ public class Floor_Escape : MonoBehaviour
             if (player != null)
             {
                 //win
-                Debug.Log("WIN");
-                //SceneManager.LoadScene("WinMenu");
+                //Debug.Log("WIN");
+                SceneManager.LoadScene("WinMenu");
 
             }
         }
