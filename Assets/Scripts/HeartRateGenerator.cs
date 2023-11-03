@@ -10,7 +10,7 @@ public class HeartRateGenerator : MonoBehaviour
     int MinValue = 60;
 
     [SerializeField]
-    private int MaxValue = 100;
+    private int MaxValue = 90;
 
     [SerializeField]
     int MaxOffset = 10;
@@ -23,6 +23,7 @@ public class HeartRateGenerator : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Generator is " + SimulationSettings.isSimulated + " and i on level: " + SimulationSettings.simulationLevel);
         if (SimulationSettings.isSimulated)
         {
             switch (SimulationSettings.simulationLevel)
@@ -61,6 +62,7 @@ public class HeartRateGenerator : MonoBehaviour
             if (ecgReceiverScript != null)
             {
                 receivedHR = ecgReceiverScript.receivedHR;
+                Debug.Log("HR: " + receivedHR);
                 return;
             }
 

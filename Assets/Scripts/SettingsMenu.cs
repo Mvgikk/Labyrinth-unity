@@ -1,18 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using TMPro;
 
 public class SettingsMenu : MonoBehaviour
 {
     
     public AudioMixer audioMixer;
-
     Resolution[] resolutions;
 
     public TMPro.TMP_Dropdown resolutionDropdown;
+
+    public TMPro.TMP_Dropdown qualityDropdown;
+
+    public Toggle simulationToggle;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class SettingsMenu : MonoBehaviour
             string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
 
-            if(resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
             {
                 currentResolutionIndex = i;
             }
@@ -35,6 +36,11 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        SimulationSettings.isSimulated = simulationToggle.isOn;
+
+        qualityDropdown.value = 2;
+        qualityDropdown.RefreshShownValue();
     }
 
     public void SetResolution (int resolutionIndex)
@@ -66,5 +72,12 @@ public class SettingsMenu : MonoBehaviour
     public void SetSimulationLevel (int simulationIndex)
     {
         SimulationSettings.simulationLevel = (SimulationLevel)simulationIndex;
+    }
+
+    public void ShowSavedSettings()
+    {
+        Debug.Log("Simulate HR: " + SimulationSettings.isSimulated);
+        Debug.Log("Simulation Level: " + SimulationSettings.simulationLevel);
+        Debug.Log("Quality: " + QualitySettings.GetQualityLevel());
     }
 }

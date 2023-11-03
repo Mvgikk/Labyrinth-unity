@@ -103,59 +103,64 @@ namespace Aidlab.BLE
         #region ScanningDevices
         private void StartDevicesScan()
         {
-            Debug.Log("Start scanning devices");
-
-            while (true)
+            if (!SimulationSettings.isSimulated)
             {
-                BLEApi.StartDeviceScan();
-                BLEApi.DeviceUpdate device = new BLEApi.DeviceUpdate();
-
-                while (BLEApi.PollDevice(ref device, true) != BLEApi.ScanStatus.FINISHED)
+                Debug.Log("Start scanning devices");
+                while (true)
                 {
-                    UpdateDevices(device);
-                    foundDevice = CheckDevices();
-                    if (!string.IsNullOrEmpty(foundDevice))
+                    BLEApi.StartDeviceScan();
+                    BLEApi.DeviceUpdate device = new BLEApi.DeviceUpdate();
+
+                    while (BLEApi.PollDevice(ref device, true) != BLEApi.ScanStatus.FINISHED)
                     {
-                        Debug.Log("Device found: " + foundDevice);
+                        UpdateDevices(device);
+                        foundDevice = CheckDevices();
+                        if (!string.IsNullOrEmpty(foundDevice))
+                        {
+                            Debug.Log("Device found: " + foundDevice);
 
-                        BLEApi.StopDeviceScan();
-                        Thread.Sleep(256);
-                        return;
+                            BLEApi.StopDeviceScan();
+                            Thread.Sleep(256);
+                            return;
+                        }
                     }
-                }
 
-                BLEApi.StopDeviceScan();
-                Debug.Log("Devices scanning complete");
-                Thread.Sleep(500);
-                Debug.Log("Start scanning devices again");
+                    BLEApi.StopDeviceScan();
+                    Debug.Log("Devices scanning complete");
+                    Thread.Sleep(500);
+                    Debug.Log("Start scanning devices again");
+                }
             }
         }
 
 
         private void UpdateDevices(BLEApi.DeviceUpdate device)
         {
-            if (!devices.ContainsKey(device.id))
+            if (!SimulationSettings.isSimulated)
             {
-                var newDevice = BLEApi.DeviceUpdateCopy(device);
-                devices.Add(device.id, newDevice);
-            }
-            else
-            {
-                var savedDevice = devices[device.id];
-                devices.Remove(device.id);
+                if (!devices.ContainsKey(device.id))
+                {
+                    var newDevice = BLEApi.DeviceUpdateCopy(device);
+                    devices.Add(device.id, newDevice);
+                }
+                else
+                {
+                    var savedDevice = devices[device.id];
+                    devices.Remove(device.id);
 
-                var newDevice = BLEApi.DeviceUpdateCopy(savedDevice);
-                if (device.nameUpdated)
-                {
-                    newDevice.name = device.name;
-                    newDevice.nameUpdated = true;
+                    var newDevice = BLEApi.DeviceUpdateCopy(savedDevice);
+                    if (device.nameUpdated)
+                    {
+                        newDevice.name = device.name;
+                        newDevice.nameUpdated = true;
+                    }
+                    if (device.isConnectableUpdated)
+                    {
+                        newDevice.isConnectable = device.isConnectable;
+                        newDevice.isConnectableUpdated = true;
+                    }
+                    devices.Add(device.id, newDevice);
                 }
-                if (device.isConnectableUpdated)
-                {
-                    newDevice.isConnectable = device.isConnectable;
-                    newDevice.isConnectableUpdated = true;
-                }
-                devices.Add(device.id, newDevice);
             }
         }
 

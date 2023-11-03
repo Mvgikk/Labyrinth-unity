@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     public SoundManager soundManager;
 
 
-    public bool logHr = false;
+    public bool logHr = true;
     public bool isWalking;
     public bool isDead = false;
 
@@ -47,11 +47,16 @@ public class Player : MonoBehaviour
         var er = GameObject.Find("ECGReceiver");
         if(er)
         {
+            Debug.Log("mam ECG receiver");
             var comp = er.GetComponent<ECGReceiver>();
             comp.receivedHR.AddListener((hr) => { 
                 fearLevel = hr - 50;
                 if (logHr) Debug.Log("hr: "+ hr);
             });
+        }
+        else
+        {
+            Debug.Log("NIE ZNALAZ£EM");
         }
     }
 
@@ -179,6 +184,9 @@ public class Player : MonoBehaviour
 
     public void ShowGameOverMenu()
     {
+        var ecgReceiver = GameObject.Find("ECGReceiver");
+        if (ecgReceiver != null)
+            Destroy(ecgReceiver);
         SceneManager.LoadScene("GameOverMenu");
     }
     IEnumerator DelayedRestart(float delay)

@@ -11,7 +11,7 @@ public class GameOverMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("LabyrinthBoxesAndMonsters");
+        SceneManager.LoadScene("Labyrinth");
     }
 
     public void QuitGame()
