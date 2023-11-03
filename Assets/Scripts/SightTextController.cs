@@ -76,7 +76,7 @@ public class SightTextController : MonoBehaviour
                     break;
                 case "HidingBox":
                     Debug.Log("widzi skrzynke");
-                    textDisplay.UpdateText("Maybe i could hide in this box \n (E to interact)");
+                    textDisplay.UpdateText("Maybe i could hide in this box \n (E to hide)");
                     break;
                 case "Scroll":
                     Debug.Log("widzi scroll");
