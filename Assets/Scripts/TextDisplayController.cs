@@ -6,7 +6,7 @@ using TMPro;
 public class TextDisplayController : MonoBehaviour
 {
     public TextMeshProUGUI displayText;
-    public float displayDuration = 6f;
+    public float displayDuration = 6.3f;
     private Coroutine displayCoroutine;
     private Coroutine typeWriterCoroutine;
     public SoundManager soundManager;
