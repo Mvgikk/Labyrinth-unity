@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DemonController : VersionedMonoBehaviour
+public class Monster : VersionedMonoBehaviour
 {
     IAstarAI ai;
 

@@ -6,47 +6,48 @@ using UnityEngine.Rendering.Universal;
 using URPGlitch.Runtime.AnalogGlitch;
 using URPGlitch.Runtime.DigitalGlitch;
 
-
-
 public class PostProcessingController : MonoBehaviour
 {
-
     private Volume volume;
-    //private LensDistortion lensDistortion;
     private AnalogGlitchVolume analogGlitchVolume;
     private DigitalGlitchVolume digitalGlitchVolume;
     private AudioSource audioSource;
     private bool playsSoundEffect = false;
-   // private Animator fearGlitchAnimator;
 
-   public AudioClip glitchSound;
+    public AudioClip glitchSound;
 
     public Player player;
+    public List<Monster> monsters = new List<Monster>();
+
+    public int glitchRange = 10;
+
     void Start()
     {
         volume = GetComponent<Volume>();
-
         volume.profile.TryGet<AnalogGlitchVolume>(out analogGlitchVolume);
         volume.profile.TryGet<DigitalGlitchVolume>(out digitalGlitchVolume);
-       // fearGlitchAnimator = GetComponent<Animator>();
-       audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+
+        Monster[] monsterArray = GameObject.FindObjectsOfType<Monster>();
+        monsters = new List<Monster>(monsterArray);
     }
     
-
     // Update is called once per frame
     void Update()
     {
+        float fearLevel = player.fearLevel;
+        bool monsterNearby = false;
 
-       float fearLevel = player.fearLevel;
-        //fearLevel = 100;
-        //Debug.Log("FEARLEVEL " + fearLevel);
-        //digitalGlitchVolume.intensity.value 
+        foreach (Monster monster in monsters)
+        {
+            if (Vector2.Distance(new Vector2(player.transform.position.x, player.transform.position.y),
+                                new Vector2(monster.transform.position.x, monster.transform.position.y)) < glitchRange)
+            {
+                monsterNearby = true;
+            }
+        }
 
-
-        //fearGlitchAnimator.SetFloat("FearLevel", fearLevel);
-
-        //digitalGlitchVolume.intensity.value = Mathf.Lerp(0f, 1f, fearLevel / 100f); 
-        if(fearLevel > 85)
+        if(fearLevel > 85 || monsterNearby)
         {
             volume.enabled = true;
             if (!playsSoundEffect) 
@@ -60,22 +61,14 @@ public class PostProcessingController : MonoBehaviour
             volume.enabled = false;
             audioSource.Stop();
         }
-
-
-
     }
     IEnumerator PlaySoundAndWait(AudioClip sound)
     {
-
         playsSoundEffect = true;
 
         audioSource.PlayOneShot(sound);
         // Wait until the sound finishes playing
         yield return new WaitForSeconds(sound.length);
         playsSoundEffect = false;
-
     }   
-
-
-
 }
