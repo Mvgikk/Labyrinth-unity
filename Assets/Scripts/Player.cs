@@ -212,6 +212,7 @@ public class Player : MonoBehaviour
             isWalking=false;
             isDead = true;
             animator.SetBool("isDead", true);
+            
             rb.bodyType= RigidbodyType2D.Static;
             audioSource.Stop();
             DelayedRestart(0.5f);
