@@ -67,7 +67,7 @@ public class TrapMovement : MonoBehaviour
             if (player != null)
             {
 
-                player.Die();
+                player.TakeDamage();
             }
         }
     }

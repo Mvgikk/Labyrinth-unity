@@ -7,15 +7,24 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public int fearLevel = 0;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public float invulnerabilityDuration = 2f; // Adjust the duration as needed
+    private bool isInvulnerable = false;
+    private float invulnerabilityTimer = 0f;
 
     public Slider fearBarSlider;
+
+    public Slider healthBarSlider;
 
     Vector3 moveDelta;
 
     public Rigidbody2D rb;
+
     public Animator animator;
 
-    public float playerSpeed = 4.0f;
+    public float playerSpeed;
+    public float maxSpeed = 4.5f;
 
     private RaycastHit2D hit;
 
@@ -31,7 +40,6 @@ public class Player : MonoBehaviour
 
     public SoundManager soundManager;
 
-
     public bool logHr = true;
     public bool isWalking;
     public bool isDead = false;
@@ -41,6 +49,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        currentHealth = maxHealth;
+        playerSpeed = maxSpeed;
         fearLevel = 60;
         boxCollider = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
@@ -63,6 +73,19 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         fearBarSlider.value = fearLevel;
+        healthBarSlider.value = currentHealth;
+
+        if (isInvulnerable)
+        {
+            invulnerabilityTimer -= Time.deltaTime;
+
+            // Check if invulnerability has ended
+            if (invulnerabilityTimer <= 0f)
+            {
+                isInvulnerable = false;
+            }
+        }
+
         if (!mapController.isMapVisible){
             if (!isHidden)
             {
@@ -153,8 +176,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) 
     {
-
-
         // game over condition
         if (other.gameObject.tag == "Monster" && isDead == false && isHidden == false)
         {
@@ -162,24 +183,39 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void TakeDamage()
+    {
+        if (!isInvulnerable)
+        {
+            currentHealth -= 20;
+            playerSpeed -= 0.5f;
+            if (currentHealth < 0)
+            {
+                Die();
+            }
+            // Apply invulnerability
+            isInvulnerable = true;
+            invulnerabilityTimer = invulnerabilityDuration;
+        }
+    }
+
+    public void ReplenishHealth()
+    {
+        currentHealth = maxHealth;
+        playerSpeed = maxSpeed;
+    }
+
     public void Die()
     {
-        //nwm nie dziala jak sie trzyma guzik
         if(!isDead){
-        soundManager.PlayDeathSound();
-        isWalking=false;
-        isDead = true;
-        animator.SetBool("isDead", true);
-        //animator.enabled=false;
-        rb.bodyType= RigidbodyType2D.Static;
-        audioSource.Stop();
-        //ShowGameOverMenu();
-        DelayedRestart(0.5f);
-        
-
-
+            soundManager.PlayDeathSound();
+            isWalking=false;
+            isDead = true;
+            animator.SetBool("isDead", true);
+            rb.bodyType= RigidbodyType2D.Static;
+            audioSource.Stop();
+            DelayedRestart(0.5f);
         }
-
     }
 
     public void ShowGameOverMenu()
@@ -190,10 +226,8 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("GameOverMenu");
     }
     IEnumerator DelayedRestart(float delay)
-{
-    yield return new WaitForSeconds(delay);
-    //animator.enabled=false;
-    ShowGameOverMenu();
-
-}
+    {
+        yield return new WaitForSeconds(delay);
+        ShowGameOverMenu();
+    }
 }

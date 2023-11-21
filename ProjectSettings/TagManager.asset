@@ -16,6 +16,7 @@ TagManager:
   - HidingBox
   - Scroll
   - Floor_Escape
+  - Cleaver
   layers:
   - Default
   - TransparentFX

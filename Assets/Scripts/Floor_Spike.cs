@@ -30,7 +30,7 @@ public class Floor_Spike : MonoBehaviour
                 //TODO gracz smierc
                 if(spikesShown)
                 {
-                    player.Die();
+                    player.TakeDamage();
                 }
             }
         }
