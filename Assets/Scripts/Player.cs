@@ -1,21 +1,15 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
     public int fearLevel = 0;
-    public int maxHealth = 100;
-    public int currentHealth;
-    public float invulnerabilityDuration = 2f; // Adjust the duration as needed
-    private bool isInvulnerable = false;
-    private float invulnerabilityTimer = 0f;
 
     public Slider fearBarSlider;
-
-    public Slider healthBarSlider;
 
     Vector3 moveDelta;
 
@@ -24,7 +18,7 @@ public class Player : MonoBehaviour
     public Animator animator;
 
     public float playerSpeed;
-    public float maxSpeed = 4.5f;
+    public float maxSpeed = 4f;
 
     private RaycastHit2D hit;
 
@@ -39,6 +33,7 @@ public class Player : MonoBehaviour
     private AudioSource audioSource;
 
     public SoundManager soundManager;
+    public TextMeshProUGUI heartRateText;
 
     public bool logHr = true;
     public bool isWalking;
@@ -49,17 +44,18 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
         playerSpeed = maxSpeed;
         fearLevel = 60;
         boxCollider = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
+
         var er = GameObject.Find("ECGReceiver");
         if(er)
         {
             Debug.Log("mam ECG receiver");
             var comp = er.GetComponent<ECGReceiver>();
-            comp.receivedHR.AddListener((hr) => { 
+            comp.receivedHR.AddListener((hr) => {
+                heartRateText.text = hr.ToString();
                 fearLevel = hr - 50;
                 if (logHr) Debug.Log("hr: "+ hr);
             });
@@ -70,21 +66,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void LooseSpeed()
+    {
+        playerSpeed -= 0.5f;
+    }
+
+    public void ResetSpeed()
+    {
+        playerSpeed = maxSpeed;
+    }
+
     private void FixedUpdate()
     {
         fearBarSlider.value = fearLevel;
-        healthBarSlider.value = currentHealth;
-
-        if (isInvulnerable)
-        {
-            invulnerabilityTimer -= Time.deltaTime;
-
-            // Check if invulnerability has ended
-            if (invulnerabilityTimer <= 0f)
-            {
-                isInvulnerable = false;
-            }
-        }
 
         if (!mapController.isMapVisible){
             if (!isHidden)
@@ -181,28 +175,6 @@ public class Player : MonoBehaviour
         {
             Die();
         }
-    }
-
-    public void TakeDamage()
-    {
-        if (!isInvulnerable)
-        {
-            currentHealth -= 20;
-            playerSpeed -= 0.5f;
-            if (currentHealth < 0)
-            {
-                Die();
-            }
-            // Apply invulnerability
-            isInvulnerable = true;
-            invulnerabilityTimer = invulnerabilityDuration;
-        }
-    }
-
-    public void ReplenishHealth()
-    {
-        currentHealth = maxHealth;
-        playerSpeed = maxSpeed;
     }
 
     public void Die()

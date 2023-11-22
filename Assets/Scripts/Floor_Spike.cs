@@ -22,7 +22,7 @@ public class Floor_Spike : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Player player = collision.gameObject.GetComponent<Player>();
+            PlayerHealthController player = collision.gameObject.GetComponent<PlayerHealthController>();
             if (player != null)
             {
 
