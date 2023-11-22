@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {   
-
     public AudioClip clickEffect;
     public AudioClip coinCollectEffect;
     public AudioClip chestOpenEffect;
@@ -12,6 +11,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip boxEnterSound;
     public AudioClip deathSound;
     public AudioClip scrollCollectSound;
+    public AudioClip hurtSound;
     public AudioSource audioSource;
 
     public AudioClip typeWriterEffect;
@@ -77,6 +77,11 @@ public class SoundManager : MonoBehaviour
     {
 
         audioSource.PlayOneShot(scrollCollectSound);
+    }
+
+    public void PlayHurtEffect()
+    {
+        audioSource.PlayOneShot(hurtSound);
     }
 
     public void StopPlaying()

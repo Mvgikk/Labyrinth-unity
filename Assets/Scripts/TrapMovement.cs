@@ -63,11 +63,11 @@ public class TrapMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Player player = collision.gameObject.GetComponent<Player>();
+            PlayerHealthController player = collision.gameObject.GetComponent<PlayerHealthController>();
             if (player != null)
             {
 
-                player.Die();
+                player.TakeDamage();
             }
         }
     }

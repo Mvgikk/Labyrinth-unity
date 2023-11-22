@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -13,9 +14,11 @@ public class Player : MonoBehaviour
     Vector3 moveDelta;
 
     public Rigidbody2D rb;
+
     public Animator animator;
 
-    public float playerSpeed = 4.0f;
+    public float playerSpeed;
+    public float maxSpeed = 4f;
 
     private RaycastHit2D hit;
 
@@ -30,7 +33,7 @@ public class Player : MonoBehaviour
     private AudioSource audioSource;
 
     public SoundManager soundManager;
-
+    public TextMeshProUGUI heartRateText;
 
     public bool logHr = true;
     public bool isWalking;
@@ -41,15 +44,18 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        playerSpeed = maxSpeed;
         fearLevel = 60;
         boxCollider = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
+
         var er = GameObject.Find("ECGReceiver");
         if(er)
         {
             Debug.Log("mam ECG receiver");
             var comp = er.GetComponent<ECGReceiver>();
-            comp.receivedHR.AddListener((hr) => { 
+            comp.receivedHR.AddListener((hr) => {
+                heartRateText.text = hr.ToString();
                 fearLevel = hr - 50;
                 if (logHr) Debug.Log("hr: "+ hr);
             });
@@ -60,9 +66,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void LooseSpeed()
+    {
+        playerSpeed -= 0.5f;
+    }
+
+    public void ResetSpeed()
+    {
+        playerSpeed = maxSpeed;
+    }
+
     private void FixedUpdate()
     {
         fearBarSlider.value = fearLevel;
+
         if (!mapController.isMapVisible){
             if (!isHidden)
             {
@@ -153,8 +170,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) 
     {
-
-
         // game over condition
         if (other.gameObject.tag == "Monster" && isDead == false && isHidden == false)
         {
@@ -164,22 +179,16 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
-        //nwm nie dziala jak sie trzyma guzik
         if(!isDead){
-        soundManager.PlayDeathSound();
-        isWalking=false;
-        isDead = true;
-        animator.SetBool("isDead", true);
-        //animator.enabled=false;
-        rb.bodyType= RigidbodyType2D.Static;
-        audioSource.Stop();
-        //ShowGameOverMenu();
-        DelayedRestart(0.5f);
-        
-
-
+            soundManager.PlayDeathSound();
+            isWalking=false;
+            isDead = true;
+            animator.SetBool("isDead", true);
+            
+            rb.bodyType= RigidbodyType2D.Static;
+            audioSource.Stop();
+            DelayedRestart(0.5f);
         }
-
     }
 
     public void ShowGameOverMenu()
@@ -190,10 +199,8 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("GameOverMenu");
     }
     IEnumerator DelayedRestart(float delay)
-{
-    yield return new WaitForSeconds(delay);
-    //animator.enabled=false;
-    ShowGameOverMenu();
-
-}
+    {
+        yield return new WaitForSeconds(delay);
+        ShowGameOverMenu();
+    }
 }

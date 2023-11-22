@@ -7,7 +7,7 @@ public class PlayerLightController : MonoBehaviour
 {
     public float decreaseRate = 0.05f; // Rate at which the light intensity decreases per second
     public Light2D playerLight;
-    public float minValue = 0.05f;
+    public float minValue = 0.25f;
 
     private void Start()
     {
