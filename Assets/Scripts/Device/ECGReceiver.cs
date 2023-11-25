@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class ECGReceiver : MonoBehaviour
 {
-    public UnityEvent<int> receivedHR;
+    public UnityEvent<int> receivedHR = new UnityEvent<int>();
 
     [SerializeField]
     int ECGDataOffset = 2;              // Receive ECG data after 2 series (better data)
@@ -40,7 +40,7 @@ public class ECGReceiver : MonoBehaviour
         Aidlab.AidlabSDK.aidlabDelegate.onDataReceivedEvents.AddListener(ReceivedECG);
         Aidlab.AidlabSDK.aidlabDelegate.SetTimer(ECGDataDelay);
 
-        GameObject FloatPlotter = GameObject.Find("FloatPlotter");
+        GameObject FloatPlotter = GameObject.Find("FloatGraph");
         if (FloatPlotter != null)
             floatGraph = FloatPlotter.GetComponent<FloatGraph>();
     }
@@ -84,13 +84,18 @@ public class ECGReceiver : MonoBehaviour
 
                 if (floatGraph != null)
                 {
+
+                    Debug.Log("floatGraph nie jest null");
+
                     List<int> x;
                     List<double> y;
                     panTompkins.getXYOfPeaks(ecgSignals, out x, out y);
                     floatGraph.SetDetectedPoints(x, y);
                     floatGraph.SetDataPoints(ecgSignals);
                 }
-            }
+                else
+                    Debug.Log("floatGraph JEST ! null");
+        }
         }
         else
         {

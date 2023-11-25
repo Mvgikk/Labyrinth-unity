@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.Events;
 
 namespace Aidlab.BLE
 {
@@ -14,7 +15,19 @@ namespace Aidlab.BLE
         private Dictionary<string, BLEApi.DeviceUpdate> devices;
         private string foundDevice;
         public Thread bleConnectorThread;
-        private BLEStatus currentBLEStatus = BLEStatus.None;
+        #region UnityDeviceStateEvents
+        public static UnityEvent<BLEStatus> deviceStatusChanged = new UnityEvent<BLEStatus>();
+        #endregion UnityDeviceStateEvents
+        private BLEStatus _currentBLEStatus = BLEStatus.None;
+        private BLEStatus currentBLEStatus
+        {
+            get { return _currentBLEStatus; }
+            set
+            {
+                _currentBLEStatus = value;
+                deviceStatusChanged.Invoke(_currentBLEStatus);
+            }
+        }
         private AidlabSDK aidlabSDK;
         private string deviceNameToConnect;      
         private bool isConnected = false;  
@@ -99,68 +112,61 @@ namespace Aidlab.BLE
         }
         #endregion MainMethods
 
-
         #region ScanningDevices
         private void StartDevicesScan()
         {
-            if (!SimulationSettings.isSimulated)
+            Debug.Log("Start scanning devices");
+
+            while (true)
             {
-                Debug.Log("Start scanning devices");
-                while (true)
+                BLEApi.StartDeviceScan();
+                BLEApi.DeviceUpdate device = new BLEApi.DeviceUpdate();
+
+                while (BLEApi.PollDevice(ref device, true) != BLEApi.ScanStatus.FINISHED)
                 {
-                    BLEApi.StartDeviceScan();
-                    BLEApi.DeviceUpdate device = new BLEApi.DeviceUpdate();
-
-                    while (BLEApi.PollDevice(ref device, true) != BLEApi.ScanStatus.FINISHED)
+                    UpdateDevices(device);
+                    foundDevice = CheckDevices();
+                    if (!string.IsNullOrEmpty(foundDevice))
                     {
-                        UpdateDevices(device);
-                        foundDevice = CheckDevices();
-                        if (!string.IsNullOrEmpty(foundDevice))
-                        {
-                            Debug.Log("Device found: " + foundDevice);
-
-                            BLEApi.StopDeviceScan();
-                            Thread.Sleep(256);
-                            return;
-                        }
+                        Debug.Log("Device found: " + foundDevice);
+                        BLEApi.StopDeviceScan();
+                        Thread.Sleep(256);
+                        return;
                     }
-
-                    BLEApi.StopDeviceScan();
-                    Debug.Log("Devices scanning complete");
-                    Thread.Sleep(500);
-                    Debug.Log("Start scanning devices again");
                 }
+
+                BLEApi.StopDeviceScan();
+                Debug.Log("Devices scanning complete");
+                Thread.Sleep(500);
+                Debug.Log("Start scanning devices again");
             }
         }
 
 
         private void UpdateDevices(BLEApi.DeviceUpdate device)
         {
-            if (!SimulationSettings.isSimulated)
+            if (!devices.ContainsKey(device.id))
             {
-                if (!devices.ContainsKey(device.id))
-                {
-                    var newDevice = BLEApi.DeviceUpdateCopy(device);
-                    devices.Add(device.id, newDevice);
-                }
-                else
-                {
-                    var savedDevice = devices[device.id];
-                    devices.Remove(device.id);
+                var newDevice = BLEApi.DeviceUpdateCopy(device);
+                devices.Add(device.id, newDevice);
+            }
+            else
+            {
+                var savedDevice = devices[device.id];
+                devices.Remove(device.id);
 
-                    var newDevice = BLEApi.DeviceUpdateCopy(savedDevice);
-                    if (device.nameUpdated)
-                    {
-                        newDevice.name = device.name;
-                        newDevice.nameUpdated = true;
-                    }
-                    if (device.isConnectableUpdated)
-                    {
-                        newDevice.isConnectable = device.isConnectable;
-                        newDevice.isConnectableUpdated = true;
-                    }
-                    devices.Add(device.id, newDevice);
+                var newDevice = BLEApi.DeviceUpdateCopy(savedDevice);
+                if (device.nameUpdated)
+                {
+                    newDevice.name = device.name;
+                    newDevice.nameUpdated = true;
                 }
+                if (device.isConnectableUpdated)
+                {
+                    newDevice.isConnectable = device.isConnectable;
+                    newDevice.isConnectableUpdated = true;
+                }
+                devices.Add(device.id, newDevice);
             }
         }
 

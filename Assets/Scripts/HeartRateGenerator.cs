@@ -74,7 +74,31 @@ public class HeartRateGenerator : MonoBehaviour
         }
         else
         {
-            this.enabled = false;
+            /*
+             * Remove existing device receiving object.
+             */
+            var ecgReceiver = GameObject.Find("ECGReceiver");
+            if (ecgReceiver != null)
+                Destroy(ecgReceiver);
+
+            /* 
+             * Rename this game object to "ECGReceiver"
+             * It makes that we don't have to change name of game object in scripts
+             * in receiving heart rate measurement.
+             */
+            this.gameObject.name = "ECGReceiver";
+
+            var ecgReceiverScript = GetComponent<ECGReceiver>();
+            if (ecgReceiverScript != null)
+            {
+                receivedHR = ecgReceiverScript.receivedHR;
+                Debug.Log("HR: " + receivedHR);
+                return;
+            }
+
+            this.gameObject.SetActive(false);
+            Debug.LogError($"{GetType().Name}: Didn't found ECG Receiver script.");
+            //this.enabled = false;
         }
     }
 

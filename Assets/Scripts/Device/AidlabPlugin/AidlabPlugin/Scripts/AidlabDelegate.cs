@@ -161,8 +161,10 @@ namespace Aidlab
             this.rr.ReceiveData(rr, timestamp);
         }
 
+        public static UnityEvent wearStateChanged = new UnityEvent();
         public void WearStateDidChange(WearState wearState)
         {
+            MainThreadWorker.ExecuteOnMainThread.Enqueue(wearStateChanged);
             this.wearState.ReceiveData(wearState, 0);
         }
 

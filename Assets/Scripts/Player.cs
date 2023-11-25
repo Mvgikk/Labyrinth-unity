@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     public SoundManager soundManager;
     public TextMeshProUGUI heartRateText;
 
-    public bool logHr = true;
+    public bool logHr = false;
     public bool isWalking;
     public bool isDead = false;
 
@@ -55,8 +55,15 @@ public class Player : MonoBehaviour
             Debug.Log("mam ECG receiver");
             var comp = er.GetComponent<ECGReceiver>();
             comp.receivedHR.AddListener((hr) => {
-                heartRateText.text = hr.ToString();
                 fearLevel = hr - 50;
+                if (fearLevel > 100)
+                {
+                    heartRateText.text = "maximum fear!";
+                }
+                else
+                {
+                    heartRateText.text = hr.ToString();
+                }
                 if (logHr) Debug.Log("hr: "+ hr);
             });
         }

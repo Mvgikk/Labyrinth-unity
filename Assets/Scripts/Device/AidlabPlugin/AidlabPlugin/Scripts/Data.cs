@@ -12,6 +12,7 @@ namespace Aidlab
             private UnityEvent onDataReceivedEvents = new UnityEvent();
             public void Subscribe(UnityAction action) { onDataReceivedEvents.AddListener(action); }
             public void Unsubscribe(UnityAction action) { onDataReceivedEvents.RemoveListener(action); }
+            public void UnsubscribeAll() { onDataReceivedEvents.RemoveAllListeners(); }
             protected void AfterDataReceived()
             {
                 MainThreadWorker.ExecuteOnMainThread.Enqueue(onDataReceivedEvents);

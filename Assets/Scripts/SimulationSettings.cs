@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SimulationSettings : MonoBehaviour
 {
-    public static bool isSimulated = true;
+    public static bool isSimulated = false;
     public static SimulationLevel simulationLevel;
 }
 

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class DeviceOnDataReceived
 {
+    public static void OnHeartRateReceived(int hr)
+    {
+        Debug.Log("Heart rate: " + hr);
+    }
     public static void OnWearStateReceived()
     {
         Debug.Log("Wear state: " + Aidlab.AidlabSDK.aidlabDelegate.wearState.value);

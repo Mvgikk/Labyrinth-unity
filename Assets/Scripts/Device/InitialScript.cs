@@ -8,12 +8,13 @@ public class InitialScript : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this);
 
-        if(instance == null)
+        if (instance == null)
         {
             instance = gameObject;
             Aidlab.AidlabSDK.init();
+            // Aidlab.AidlabSDK.aidlabDelegate.wearState.Subscribe(() => { Debug.Log(Aidlab.AidlabSDK.aidlabDelegate.wearState.value); });
         }
         else
             Destroy(gameObject);

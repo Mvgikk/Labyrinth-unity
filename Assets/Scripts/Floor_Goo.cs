@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Floor_Goo : MonoBehaviour
 {
-    public float playerDefaultSpeed = 4.0f;
     public float slowdownSpeed = 0.5f;
 
 
@@ -33,7 +32,7 @@ public class Floor_Goo : MonoBehaviour
             {
                 player.isInGoo = false;
                 Debug.Log("Chlop wyszedl z mazi");
-                player.playerSpeed = playerDefaultSpeed;
+                player.playerSpeed = player.maxSpeed;
             }
         }
     }
