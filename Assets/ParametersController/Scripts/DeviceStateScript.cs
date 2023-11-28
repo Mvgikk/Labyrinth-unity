@@ -75,7 +75,7 @@ public class DeviceStateScript : MonoBehaviour, IPointerClickHandler
     }
 
     [SerializeField]
-    public UnityEngine.Object deviceSettingsPrefab;
+    public UnityEngine.Object parametersSettingsPrefab;
     public void OnPointerClick(PointerEventData eventData)
     {
         GameObject root = gameObject.transform.parent.gameObject;
@@ -83,7 +83,7 @@ public class DeviceStateScript : MonoBehaviour, IPointerClickHandler
         if (settingsObj == null)
         {
             Debug.Log("NULL");
-            Object prefab = deviceSettingsPrefab;
+            Object prefab = parametersSettingsPrefab;
             settingsObj = Instantiate(prefab) as GameObject;
             settingsObj.name = "ParametersSettingsPrefab";
         }
