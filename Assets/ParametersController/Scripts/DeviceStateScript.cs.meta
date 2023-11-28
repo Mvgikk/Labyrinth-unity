@@ -3,7 +3,9 @@ guid: a9648169ea7f62b40875c5d4b5684a61
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - controll: {instanceID: 0}
+  - deviceSettingsPrefab: {fileID: 11500000, guid: c5a5f46ad47225a4ba095366635964c0, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -3,7 +3,19 @@ guid: e8717ba9f3f157d49bdb2c89b4d2e7ac
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - WearStateToggle: {instanceID: 0}
+  - HeartRateToggle: {instanceID: 0}
+  - TemperatureToggle: {instanceID: 0}
+  - RespirationToggle: {instanceID: 0}
+  - RespirationRateToggle: {instanceID: 0}
+  - RRToggle: {instanceID: 0}
+  - PressureToggle: {instanceID: 0}
+  - OrientationToggle: {instanceID: 0}
+  - ECGPlotToggle: {instanceID: 0}
+  - ECGPeaksDotsToggle: {instanceID: 0}
+  - ShowValuesToggle: {instanceID: 0}
+  - ParametersValuesPrefab: {fileID: 1601078773520595798, guid: 383baddc31c1dd541b96cf53967e8c79, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

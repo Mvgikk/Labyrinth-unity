@@ -260,7 +260,9 @@ public class ParametersController : MonoBehaviour
         }
     }
 
-    private static string ParametersControllerPrefabPath = "Assets/ParametersController/SubPrefabs/ParametersValues.prefab";
+
+    [SerializeField]
+    public UnityEngine.Object ParametersValuesPrefab;
     public void DisplayParametersValues(bool doReceive)
     {
         if (doReceive)
@@ -269,7 +271,7 @@ public class ParametersController : MonoBehaviour
             GameObject parametersValues = GameObject.Find("ParametersValues");
             if (parametersValues == null)
             {
-                UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath(ParametersControllerPrefabPath, typeof(GameObject));
+                UnityEngine.Object prefab = ParametersValuesPrefab;
                 parametersValues = Instantiate(prefab) as GameObject;
                 parametersValues.name = parametersValues.name.Replace("(Clone)", "").Trim();
                 DontDestroyOnLoad(parametersValues);
