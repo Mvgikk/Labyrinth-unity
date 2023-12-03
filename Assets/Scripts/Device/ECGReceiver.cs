@@ -66,12 +66,12 @@ public class ECGReceiver : MonoBehaviour
             {
                 if (--ECGDataCalibrateOffset == 0)
                 {
-                    Debug.Log("Koniec kalibracji");
+                    Debug.LogError("Koniec kalibracji");
                     Aidlab.AidlabSDK.aidlabDelegate.calibrated = true;
                     Aidlab.AidlabSDK.aidlabDelegate.SetTimer(ECGDataDelay);
                 }
                 else
-                    Debug.Log("Kalibracja");
+                    Debug.LogError("Kalibracja");
             }
             else
             {
@@ -99,7 +99,7 @@ public class ECGReceiver : MonoBehaviour
         }
         else
         {
-            Debug.Log("Dataoffset");
+            Debug.LogError("Dataoffset");
             ECGDataOffset--;
             Aidlab.AidlabSDK.aidlabDelegate.signal.Clear();
         }

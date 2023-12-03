@@ -116,7 +116,7 @@ namespace Aidlab.BLE
         private void StartDevicesScan()
         {
             Debug.Log("Start scanning devices");
-
+            deviceStatusChanged.Invoke(BLEStatus.ScanningDevices);
             while (true)
             {
                 BLEApi.StartDeviceScan();
