@@ -24,82 +24,82 @@ public class HeartRateGenerator : MonoBehaviour
     void Start()
     {
 
-        Debug.Log("Generator is " + SimulationSettings.isSimulated + " and i on level: " + SimulationSettings.simulationLevel);
-        if (SimulationSettings.isSimulated) //zmienic na to potem
-        //if (true)
-        {
-            switch (SimulationSettings.simulationLevel) // na to potem
-            //switch (SimulationLevel.Low)
-            {
-                case SimulationLevel.Low:
-                    MinValue = 60;
-                    MaxValue = 90;
-                    break;
-                case SimulationLevel.Medium:
-                    MinValue = 90;
-                    MaxValue = 140;
-                    break;
-                case SimulationLevel.High:
-                    MinValue = 130;
-                    MaxValue = 160;
-                    break;
-            }
-            hrValue = Random.Range(MinValue, MaxValue);
-            DontDestroyOnLoad(this);
+        //Debug.Log("Generator is " + SimulationSettings.isSimulated + " and i on level: " + SimulationSettings.simulationLevel);
+        //if (SimulationSettings.isSimulated) //zmienic na to potem
+        ////if (true)
+        //{
+        //    switch (SimulationSettings.simulationLevel) // na to potem
+        //    //switch (SimulationLevel.Low)
+        //    {
+        //        case SimulationLevel.Low:
+        //            MinValue = 60;
+        //            MaxValue = 90;
+        //            break;
+        //        case SimulationLevel.Medium:
+        //            MinValue = 90;
+        //            MaxValue = 140;
+        //            break;
+        //        case SimulationLevel.High:
+        //            MinValue = 130;
+        //            MaxValue = 160;
+        //            break;
+        //    }
+        //    hrValue = Random.Range(MinValue, MaxValue);
+        //    DontDestroyOnLoad(this);
 
-            /*
-             * Remove existing device receiving object.
-             */
-            var ecgReceiver = GameObject.Find("ECGReceiver");
-            if (ecgReceiver != null)
-                Destroy(ecgReceiver);
+        //    /*
+        //     * Remove existing device receiving object.
+        //     */
+        //    var ecgReceiver = GameObject.Find("ECGReceiver");
+        //    if (ecgReceiver != null)
+        //        Destroy(ecgReceiver);
 
-            /* 
-             * Rename this game object to "ECGReceiver"
-             * It makes that we don't have to change name of game object in scripts
-             * in receiving heart rate measurement.
-             */
-            this.gameObject.name = "ECGReceiver";
+        //    /* 
+        //     * Rename this game object to "ECGReceiver"
+        //     * It makes that we don't have to change name of game object in scripts
+        //     * in receiving heart rate measurement.
+        //     */
+        //    this.gameObject.name = "ECGReceiver";
 
-            var ecgReceiverScript = GetComponent<ECGReceiver>();
-            if (ecgReceiverScript != null)
-            {
-                receivedHR = ecgReceiverScript.receivedHR;
-                Debug.Log("HR: " + receivedHR);
-                return;
-            }
+        //    var ecgReceiverScript = GetComponent<ECGReceiver>();
+        //    if (ecgReceiverScript != null)
+        //    {
+        //        receivedHR = ecgReceiverScript.receivedHR;
+        //        Debug.Log("HR: " + receivedHR);
+        //        return;
+        //    }
 
-            this.gameObject.SetActive(false);
-            Debug.LogError($"{GetType().Name}: Didn't found ECG Receiver script.");
-        }
-        else
-        {
-            /*
-             * Remove existing device receiving object.
-             */
-            var ecgReceiver = GameObject.Find("ECGReceiver");
-            if (ecgReceiver != null)
-                Destroy(ecgReceiver);
+        //    this.gameObject.SetActive(false);
+        //    Debug.LogError($"{GetType().Name}: Didn't found ECG Receiver script.");
+        //}
+        //else
+        //{
+        //    /*
+        //     * Remove existing device receiving object.
+        //     */
+        //    var ecgReceiver = GameObject.Find("ECGReceiver");
+        //    if (ecgReceiver != null)
+        //        Destroy(ecgReceiver);
 
-            /* 
-             * Rename this game object to "ECGReceiver"
-             * It makes that we don't have to change name of game object in scripts
-             * in receiving heart rate measurement.
-             */
-            this.gameObject.name = "ECGReceiver";
+        //    /* 
+        //     * Rename this game object to "ECGReceiver"
+        //     * It makes that we don't have to change name of game object in scripts
+        //     * in receiving heart rate measurement.
+        //     */
+        //    this.gameObject.name = "ECGReceiver";
 
-            var ecgReceiverScript = GetComponent<ECGReceiver>();
-            if (ecgReceiverScript != null)
-            {
-                receivedHR = ecgReceiverScript.receivedHR;
-                Debug.Log("HR: " + receivedHR);
-                return;
-            }
+        //    var ecgReceiverScript = GetComponent<ECGReceiver>();
+        //    if (ecgReceiverScript != null)
+        //    {
+        //        receivedHR = ecgReceiverScript.receivedHR;
+        //        Debug.Log("HR: " + receivedHR);
+        //        return;
+        //    }
 
-            this.gameObject.SetActive(false);
-            Debug.LogError($"{GetType().Name}: Didn't found ECG Receiver script.");
-            //this.enabled = false;
-        }
+        //    this.gameObject.SetActive(false);
+        //    Debug.LogError($"{GetType().Name}: Didn't found ECG Receiver script.");
+        //    //this.enabled = false;
+        //}
     }
 
     void Update()
