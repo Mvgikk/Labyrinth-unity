@@ -42,35 +42,16 @@ public class Player : MonoBehaviour
     public bool isHidden = false;
     public bool isInGoo = false;
 
+    public bool foundECGReceiver = false;
+
     private void Start()
     {
         playerSpeed = maxSpeed;
-        fearLevel = 60;
+        //fearLevel = 60;
         boxCollider = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
 
-        var er = GameObject.Find("ECGReceiver");
-        if(er)
-        {
-            Debug.Log("mam ECG receiver");
-            var comp = er.GetComponent<ECGReceiver>();
-            comp.receivedHR.AddListener((hr) => {
-                fearLevel = hr - 50;
-                if (fearLevel > 100)
-                {
-                    heartRateText.text = "maximum fear!";
-                }
-                else
-                {
-                    heartRateText.text = hr.ToString();
-                }
-                if (logHr) Debug.Log("hr: "+ hr);
-            });
-        }
-        else
-        {
-            Debug.Log("NIE ZNALAZ£EM");
-        }
+        
     }
 
     public void LooseSpeed()
@@ -159,6 +140,40 @@ public class Player : MonoBehaviour
                 }
             }
         }
+        if (!foundECGReceiver)  
+        {
+
+
+            var er = GameObject.Find("ECGReceiver");
+            if(er)
+            {
+                foundECGReceiver = true;   
+                Debug.Log("mam ECG receiver");
+            }
+        }
+        else
+        {
+            var er = GameObject.Find("ECGReceiver");
+            var comp = er.GetComponent<ECGReceiver>();
+            comp.receivedHR.AddListener((hr) => {
+                fearLevel = hr - 50;
+                if (fearLevel > 100)
+                {
+                    heartRateText.text = "maximum fear!";
+                }
+                else
+                {
+                    heartRateText.text = hr.ToString();
+                }
+                if (logHr) Debug.Log("hr: "+ hr);
+
+            });
+
+
+        }
+
+
+
     }
 
     public void HidePlayer()
@@ -210,4 +225,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(delay);
         ShowGameOverMenu();
     }
+
+
+
 }

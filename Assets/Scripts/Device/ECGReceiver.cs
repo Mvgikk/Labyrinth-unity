@@ -36,7 +36,7 @@ public class ECGReceiver : MonoBehaviour
     {
         panTompkins = new PanTompkins(248);
         ECGSamplesDenominator = ECGDataCalibrateOffset;
-
+        Debug.LogError("ekg recevier created");
         Aidlab.AidlabSDK.aidlabDelegate.onDataReceivedEvents.AddListener(ReceivedECG);
         Aidlab.AidlabSDK.aidlabDelegate.SetTimer(ECGDataDelay);
 
@@ -72,12 +72,14 @@ public class ECGReceiver : MonoBehaviour
                 }
                 else
                     Debug.LogError("Kalibracja");
+
             }
             else
             {
                 ecgSignals = new List<double>(Aidlab.AidlabSDK.aidlabDelegate.signal);
                 var hr = panTompkins.detectPeaks(ecgSignals);
                 // Debug.Log(hr);
+                Debug.LogError(hr);
 
                 if (receivedHR != null)
                     receivedHR.Invoke((int)hr);
