@@ -14,9 +14,12 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Labyrinth.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    guid: cf16446f58e874e4e8c32349a5e9d997
   - enabled: 1
     path: Assets/Scenes/GameOverMenu.unity
     guid: 8abe795a274c7774eb1711e9e136141e

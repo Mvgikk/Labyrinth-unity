@@ -46,7 +46,7 @@ namespace Aidlab.BLE
             bleConnectorThread.Start();
             currentBLEStatus = BLEStatus.ScanningDevices;
         }
-
+        
         public void ConnectionProcess()
         {
             switch (currentBLEStatus)
