@@ -17,10 +17,12 @@ public class DeviceStateScript : MonoBehaviour, IPointerClickHandler
         set
         {
             deviceState = value;
-            MainThreadDispatcher.Instance.Enqueue(() =>
-            {
-                SetColor();
-            });
+            if (MainThreadDispatcher.Instance != null) {
+                MainThreadDispatcher.Instance.Enqueue(() =>
+                {
+                    SetColor();
+                });
+            }
         }
     }
 
@@ -50,10 +52,13 @@ public class DeviceStateScript : MonoBehaviour, IPointerClickHandler
         set
         {
             wearState = value;
-            MainThreadDispatcher.Instance.Enqueue(() =>
+            if (MainThreadDispatcher.Instance != null)
             {
-                SetColor();
-            });
+                MainThreadDispatcher.Instance.Enqueue(() =>
+                {
+                    SetColor();
+                });
+            }
         }
     }
 

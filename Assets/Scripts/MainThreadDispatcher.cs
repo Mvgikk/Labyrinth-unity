@@ -8,34 +8,41 @@ using Aidlab.BLE;
 
 public class MainThreadDispatcher : MonoBehaviour
 {
-    private static MainThreadDispatcher _instance;
+    public static MainThreadDispatcher _instance;
     private static readonly Queue<Action> _actionQueue = new Queue<Action>();
     private static readonly object _lock = new object();
+
+    public void Start()
+    {
+        if (_instance == null)
+        {
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = this.GetComponent<MainThreadDispatcher>();
+                }
+            }
+        }
+    }
 
     public static MainThreadDispatcher Instance
     {
         get
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_lock)
-                {
-                    if (_instance == null)
-                    {
-                        CreateInstance();
-                    }
-                }
+                return _instance;
             }
-
-            return _instance;
+            else return null;
         }
     }
 
-    private static void CreateInstance()
-    {
-        GameObject dispatcherObject = new GameObject("MainThreadDispatcher");
-        _instance = dispatcherObject.AddComponent<MainThreadDispatcher>();
-    }
+    //private static void CreateInstance()
+    //{
+    //    GameObject dispatcherObject = new GameObject("MainThreadDispatcher");
+    //    _instance = dispatcherObject.AddComponent<MainThreadDispatcher>();
+    //}
 
     private void Update()
     {
