@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Aidlab;
+using Aidlab.BLE;
 
 public class MainThreadDispatcher : MonoBehaviour
 {
@@ -27,18 +29,6 @@ public class MainThreadDispatcher : MonoBehaviour
 
             return _instance;
         }
-    }
-
-    public void EnsureInitialized()
-    {
-        // Ensure the initialization logic is done on the main thread
-        if (System.Threading.Thread.CurrentThread.ManagedThreadId != 1)
-        {
-            Enqueue(() => EnsureInitialized());
-            return;
-        }
-
-        CreateInstance();
     }
 
     private static void CreateInstance()
