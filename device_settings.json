@@ -1,1 +1,1 @@
-{"WearState":true,"HeartRate":true,"Temperature":false,"Respiration":false,"RespirationRate":false,"RR":false,"Pressure":false,"Orientation":false,"PlotECG":false,"PlotDetectedPeaks":false,"ShowValues":true}
+{"WearState":false,"HeartRate":false,"Temperature":false,"Respiration":false,"RespirationRate":false,"RR":false,"Pressure":false,"Orientation":false,"PlotECG":false,"PlotDetectedPeaks":false,"ShowValues":false}
