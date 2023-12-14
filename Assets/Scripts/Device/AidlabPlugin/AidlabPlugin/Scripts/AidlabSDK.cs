@@ -17,6 +17,7 @@ namespace Aidlab
         {
             var gameObject = GameObject.Instantiate((UnityEngine.Object)Resources.Load("SDK"), Vector3.zero,
                 Quaternion.identity);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
             DontDestroyOnLoad(gameObject);
         } 
 
